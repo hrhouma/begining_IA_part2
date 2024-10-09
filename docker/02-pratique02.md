@@ -1,7 +1,7 @@
 ----------------------------
 # 1 - Objectif : 
 ----------------------------
-- comprendre le  concept d’avoir un processus qui tourne  dans un conteneur Docker :
+- *comprendre le  concept d’avoir un processus qui tourne  dans un conteneur Docker :*
 
 ----------------------------
 # 2 - Exercices : 
