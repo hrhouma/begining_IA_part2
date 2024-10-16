@@ -1,6 +1,6 @@
 # Tutoriel Étape par Étape pour Apprendre les Layouts avec Streamlit
 
-Ce tutoriel guidera vos étudiants pour créer une application Streamlit en utilisant différentes dispositions comme les barres latérales, les colonnes et les onglets. Le but est de les aider à configurer des layouts avancés tout en testant leur code à chaque étape.
+Ce tutoriel vous guidera pour créer une application Streamlit en utilisant différentes dispositions comme les barres latérales, les colonnes et les onglets. Le but est de vous aider à configurer des layouts avancés tout en testant leur code à chaque étape.
 
 #### Pré-requis
 - Python installé sur votre machine.
