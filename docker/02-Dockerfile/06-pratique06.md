@@ -1,4 +1,4 @@
-# Pratique 05 🌐 : Créer un conteneur Apache avec et sans Dockerfile
+# Pratique 06 🌐 : Créer un conteneur Apache avec et sans Dockerfile
 
 ### **Devoir :**
 
