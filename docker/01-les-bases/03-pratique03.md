@@ -1,4 +1,4 @@
-# Pratique 04 🗑️ : Supprimer des images et conteneurs & créer une image Nginx
+# Pratique 03 🗑️ : Supprimer des images et conteneurs & créer une image Nginx
 
 
 # **Objectif** :
