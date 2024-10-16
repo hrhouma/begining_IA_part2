@@ -1,6 +1,6 @@
 # Tutoriel Étape par Étape pour Apprendre Streamlit avec des Environnements Virtuels
 
-Ce tutoriel guidera vos étudiants pour créer une application Streamlit en utilisant le module `streamlit` dans un environnement virtuel. Le but est d'apprendre à créer un environnement virtuel, écrire du code, tester les résultats, puis continuer à écrire et tester.
+Ce tutoriel vous guidera  pour créer une application Streamlit en utilisant le module `streamlit` dans un environnement virtuel. Le but est de vous apprendre à créer un environnement virtuel, écrire du code, tester les résultats, puis continuer à écrire et tester.
 
 #### Pré-requis
 - Python installé sur votre machine.
