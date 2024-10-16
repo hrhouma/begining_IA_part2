@@ -1,6 +1,6 @@
 # Tutoriel Étape par Étape pour Apprendre les Widgets avec Streamlit
 
-Ce tutoriel guidera vos étudiants pour créer une application Streamlit en utilisant différents widgets comme les boutons, les cases à cocher, les boutons radio, les listes déroulantes, les curseurs, les champs de texte et les téléversements de fichiers.
+Ce tutoriel vous guidera pour créer une application Streamlit en utilisant différents widgets comme les boutons, les cases à cocher, les boutons radio, les listes déroulantes, les curseurs, les champs de texte et les téléversements de fichiers.
 
 #### Pré-requis
 - Python installé sur votre machine.
