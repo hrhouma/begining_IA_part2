@@ -56,7 +56,13 @@ Vous allez créer un conteneur avec Apache installé à l'intérieur et configur
      service apache2 status
      ```
 
-6. **Créer un fichier `index.html` sur la machine hôte** :
+     ```bash
+    apt install curl
+    curl localhost:80
+    exit
+     ```
+
+7. **Créer un fichier `index.html` sur la machine hôte** :
    - Sur votre machine hôte (hors du conteneur), créez un répertoire de travail et un fichier `index.html` :
      ```bash
      mkdir monsite
@@ -64,16 +70,16 @@ Vous allez créer un conteneur avec Apache installé à l'intérieur et configur
      echo "<h1>Hello world.. running in apache2</h1>" > index.html
      ```
 
-7. **Copier le fichier `index.html` vers le conteneur** :
+8. **Copier le fichier `index.html` vers le conteneur** :
    - Utilisez la commande `docker cp` pour copier le fichier HTML de votre hôte vers le conteneur à l'emplacement `/var/www/html/` :
      ```bash
      docker cp index.html c1:/var/www/html/index.html
      ```
 
-8. **Vérifier l'accès à la page** :
+9. **Vérifier l'accès à la page** :
    - Ouvrez un navigateur web et accédez à l'adresse `http://localhost`. Si tout fonctionne correctement, vous devriez voir la page avec le texte "Hello world.. running in apache2".
 
-9. **Stopper et supprimer le conteneur (facultatif)** :
+10. **Stopper et supprimer le conteneur (facultatif)** :
    - Après avoir terminé, vous pouvez arrêter et supprimer le conteneur avec les commandes suivantes :
      ```bash
      docker stop c1
