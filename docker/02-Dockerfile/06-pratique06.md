@@ -76,7 +76,17 @@ exit
      docker cp index.html c1:/var/www/html/index.html
      ```
 
-9. **Vérifier l'accès à la page** :
+
+9.1. **Vérifier l'exitence de la page** :
+
+```bash
+docker exec -it c1 bash
+cd /var/www/html
+ls
+exit
+```
+   
+9.2. **Vérifier l'accès à la page** :
    - Ouvrez un navigateur web et accédez à l'adresse `http://localhost`. Si tout fonctionne correctement, vous devriez voir la page avec le texte "Hello world.. running in apache2".
 
 10. **Stopper et supprimer le conteneur (facultatif)** :
