@@ -27,7 +27,7 @@ Vous allez créer un conteneur avec Apache installé à l'intérieur et configur
 1. **Créer un conteneur Ubuntu** :
    - Exécutez la commande suivante pour créer et démarrer un conteneur nommé `c1` à partir de l'image `ubuntu` :
      ```bash
-     docker run -d --name c1 -p 80:80 ubuntu
+     docker run -d -it --name c1 -p 80:80 ubuntu
      ```
    - Cela crée un conteneur Ubuntu et expose le port 80 de votre machine hôte au port 80 du conteneur.
 
