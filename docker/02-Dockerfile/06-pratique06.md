@@ -56,11 +56,11 @@ Vous allez créer un conteneur avec Apache installé à l'intérieur et configur
      service apache2 status
      ```
 
-     ```bash
-    apt install curl
-    curl localhost:80
-    exit
-     ```
+```bash
+apt install curl
+curl localhost:80
+exit
+```
 
 7. **Créer un fichier `index.html` sur la machine hôte** :
    - Sur votre machine hôte (hors du conteneur), créez un répertoire de travail et un fichier `index.html` :
