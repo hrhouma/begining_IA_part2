@@ -321,3 +321,23 @@ Ensuite, redémarrez le service Elasticsearch et essayez de générer à nouveau
 Assurez-vous que vous exécutez les commandes avec les permissions adéquates et que le chemin vers le binaire est correct. Si vous avez installé Elasticsearch manuellement, le chemin peut varier.
 
 Si le problème persiste après avoir suivi ces étapes, faites-le moi savoir, et je vous aiderai à approfondir l'investigation.
+
+---------------
+
+
+L'écran que vous voyez vous demande un code de vérification pour lier Kibana à Elasticsearch. Vous devez récupérer ce code depuis le serveur où Kibana est installé. Voici les étapes pour obtenir ce code de vérification :
+
+### 1. **Connectez-vous au serveur où Kibana est installé**.
+
+### 2. **Exécutez la commande pour récupérer le code de vérification** :
+   Depuis le répertoire d'installation de Kibana, exécutez la commande suivante :
+   ```bash
+   sudo /usr/share/kibana/bin/kibana-verification-code
+   ```
+
+   Cette commande affichera un code à 6 chiffres que vous devrez entrer dans l'écran que vous avez partagé.
+
+### 3. **Saisissez le code** :
+   Une fois que vous avez le code, entrez-le dans les cases à l'écran de Kibana et cliquez sur **Verify**.
+
+Cela validera la connexion entre Kibana et Elasticsearch, et vous pourrez accéder à l'interface Kibana. Si vous rencontrez des problèmes pour exécuter la commande ou obtenir le code, n'hésitez pas à me le signaler.
