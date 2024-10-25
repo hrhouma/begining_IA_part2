@@ -386,3 +386,25 @@ L'écran que vous voyez vous demande un code de vérification pour lier Kibana �
    Une fois que vous avez le code, entrez-le dans les cases à l'écran de Kibana et cliquez sur **Verify**.
 
 Cela validera la connexion entre Kibana et Elasticsearch, et vous pourrez accéder à l'interface Kibana. Si vous rencontrez des problèmes pour exécuter la commande ou obtenir le code, n'hésitez pas à me le signaler.
+
+--------------
+
+L'interface que vous voyez est la page de connexion à Kibana, qui utilise les identifiants d'Elasticsearch pour s'authentifier. Voici quelques détails concernant le mot de passe et le nom d'utilisateur :
+
+### Nom d'utilisateur par défaut
+- Le **nom d'utilisateur** par défaut est `elastic`.
+
+### Mot de passe par défaut
+Le **mot de passe** pour l'utilisateur `elastic` vous est généralement donné lors de la première installation d'Elasticsearch, à moins que vous ne l'ayez modifié manuellement. Si vous avez perdu ou oublié le mot de passe, voici comment le réinitialiser :
+
+### Réinitialisation du mot de passe pour l'utilisateur `elastic`
+1. **Exécutez la commande pour réinitialiser le mot de passe** sur votre serveur Elasticsearch :
+   ```bash
+   sudo /usr/share/elasticsearch/bin/elasticsearch-reset-password -u elastic
+   ```
+
+2. **Notez le nouveau mot de passe** généré ou entrez-en un nouveau lorsque cela vous est demandé.
+
+3. **Utilisez ce nouveau mot de passe** pour vous connecter à Kibana en tant qu'utilisateur `elastic`.
+
+Si vous rencontrez des problèmes ou si vous ne trouvez pas la commande, vous pouvez me le faire savoir pour que je vous aide à réinitialiser ou résoudre le problème.
