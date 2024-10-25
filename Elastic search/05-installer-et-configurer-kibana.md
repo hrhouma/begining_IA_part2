@@ -1,4 +1,8 @@
+
 # DRFAFT - EN COURS DE DEV
+
+ sudo /usr/share/elasticsearch/bin/elasticsearch-create-enrollment-token -s kibana
+
 L'erreur `Unable to locate package kibana` signifie que le paquet Kibana n'est pas trouvé dans les dépôts par défaut d'APT. Voici comment l'ajouter correctement au dépôt pour Ubuntu/Debian :
 
 ### Étapes d'installation de Kibana
