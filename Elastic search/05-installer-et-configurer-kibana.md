@@ -174,6 +174,31 @@ Logstash, un outil de la suite Elastic, facilite l'importation de fichiers CSV.
    # Charger le fichier CSV
    df = pd.read_csv('/chemin/vers/fichier.csv')
 
+
+
+   -------------
+
+
+   L'interface que vous voyez est la page de connexion à Kibana, qui utilise les identifiants d'Elasticsearch pour s'authentifier. Voici quelques détails concernant le mot de passe et le nom d'utilisateur :
+
+### Nom d'utilisateur par défaut
+- Le **nom d'utilisateur** par défaut est `elastic`.
+
+### Mot de passe par défaut
+Le **mot de passe** pour l'utilisateur `elastic` vous est généralement donné lors de la première installation d'Elasticsearch, à moins que vous ne l'ayez modifié manuellement. Si vous avez perdu ou oublié le mot de passe, voici comment le réinitialiser :
+
+### Réinitialisation du mot de passe pour l'utilisateur `elastic`
+1. **Exécutez la commande pour réinitialiser le mot de passe** sur votre serveur Elasticsearch :
+   ```bash
+   sudo /usr/share/elasticsearch/bin/elasticsearch-reset-password -u elastic
+   ```
+
+2. **Notez le nouveau mot de passe** généré ou entrez-en un nouveau lorsque cela vous est demandé.
+
+3. **Utilisez ce nouveau mot de passe** pour vous connecter à Kibana en tant qu'utilisateur `elastic`.
+
+Si vous rencontrez des problèmes ou si vous ne trouvez pas la commande, vous pouvez me le faire savoir pour que je vous aide à réinitialiser ou résoudre le problème.
+
    # Préparer les données pour Elasticsearch
    def generate_data(df):
        for _, row in df.iterrows():
@@ -324,6 +349,26 @@ Si le problème persiste après avoir suivi ces étapes, faites-le moi savoir, e
 
 ---------------
 
+
+L'écran que vous voyez vous demande un code de vérification pour lier Kibana à Elasticsearch. Vous devez récupérer ce code depuis le serveur où Kibana est installé. Voici les étapes pour obtenir ce code de vérification :
+
+### 1. **Connectez-vous au serveur où Kibana est installé**.
+
+### 2. **Exécutez la commande pour récupérer le code de vérification** :
+   Depuis le répertoire d'installation de Kibana, exécutez la commande suivante :
+   ```bash
+   sudo /usr/share/kibana/bin/kibana-verification-code
+   ```
+
+   Cette commande affichera un code à 6 chiffres que vous devrez entrer dans l'écran que vous avez partagé.
+
+### 3. **Saisissez le code** :
+   Une fois que vous avez le code, entrez-le dans les cases à l'écran de Kibana et cliquez sur **Verify**.
+
+Cela validera la connexion entre Kibana et Elasticsearch, et vous pourrez accéder à l'interface Kibana. Si vous rencontrez des problèmes pour exécuter la commande ou obtenir le code, n'hésitez pas à me le signaler.
+
+
+-----
 
 L'écran que vous voyez vous demande un code de vérification pour lier Kibana à Elasticsearch. Vous devez récupérer ce code depuis le serveur où Kibana est installé. Voici les étapes pour obtenir ce code de vérification :
 
