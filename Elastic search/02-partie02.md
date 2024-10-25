@@ -37,6 +37,24 @@ MATCH (n:Person {name: 'John'}) DETACH DELETE n
 ```
 Cette requête supprime le nœud `John` ainsi que toutes les relations qui y sont associées.
 
+#### Exemple 7 : Supprimer un nœud et une relation
+
+Pour supprimer une relation spécifique entre deux nœuds dans Neo4j sans supprimer les nœuds eux-mêmes, vous pouvez utiliser la commande `DELETE` en ciblant uniquement la relation.
+
+
+```cypher
+MATCH (a:Person {name: "Alice"})-[r:KNOWS]->(b:Person {name: "Bob"})
+DELETE r
+```
+
+Dans cet exemple :
+
+- On utilise `MATCH` pour trouver une relation `KNOWS` entre deux nœuds `Person` nommés "Alice" et "Bob".
+- La relation `r` est ciblée avec `DELETE r` pour la supprimer, sans toucher aux nœuds `a` et `b`.
+
+
+
+
 ### Étape 11 : Sauvegarde et Restauration de Neo4j
 Pour des raisons de sécurité et de gestion des données, vous pourriez vouloir sauvegarder ou restaurer votre base de données.
 
