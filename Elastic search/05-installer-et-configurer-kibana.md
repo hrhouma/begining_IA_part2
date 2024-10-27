@@ -6,17 +6,28 @@
    ```bash
    sudo apt update
    ```
+---------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------
 
 2. **Importer la clé GPG de la suite Elastic** :
    ```bash
    wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
    ```
 
+---------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------
+
 3. **Ajouter le dépôt Elastic** (*regardez l'annexe 1*):
    Ajoutez le dépôt Elastic à votre liste de sources APT :
    ```bash
    echo "deb https://artifacts.elastic.co/packages/8.x/apt stable main" | sudo tee -a /etc/apt/sources.list.d/elastic-8.x.list
    ```
+
+---------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------
 
 # (*Regardez l'annexe 1*):
 *Assurez-vous de remplacer `8.x` par la version spécifique de votre installation Elasticsearch si nécessaire.*
@@ -26,12 +37,19 @@
    sudo apt update
    ```
 
+---------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------
+
 5. **Installer Kibana** :
    Maintenant, vous pouvez installer Kibana avec :
    ```bash
    sudo apt install kibana
    ```
 
+---------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------
 
 6. **Configurer et démarrer Kibana** :
    Une fois installé, activez et démarrez Kibana :
@@ -41,6 +59,10 @@
    sudo systemctl start kibana
    sudo systemctl status kibana
    ```
+   
+---------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------
 
 
 7. **Configurer Kibana** :
@@ -54,13 +76,20 @@
    server.host: "localhost"
    elasticsearch.hosts: ["http://localhost:9200"]
    ```
+
+---------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------
+
 8 **Démarrer Kibana** :
    ```bash
    sudo systemctl stop kibana
    sudo systemctl enable kibana
    sudo systemctl start kibana
    ```
-
+---------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------
 
 9. **Vérifiez l'installation d'Elasticsearch**
 
@@ -77,28 +106,34 @@ sudo systemctl status kibana
 
 *Cela vous permettra de voir si Elasticsearch est bien installé et en cours d'exécution.*
 
+---------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------
 
-9. *Vérifiez http://localhost:5601*
+9.1. *Vérifiez http://localhost:5601*
 
 - L'écran que vous voyez demande un "Enrollment Token" pour initialiser Kibana.
 - Ce token est nécessaire pour connecter Kibana à Elasticsearch, et il est généré lors de l'installation d'Elasticsearch.
 
 ### Pour obtenir le token d'enrollment, suivez ces étapes :
 
-9.1. **Accédez à votre terminal** sur le serveur où Elasticsearch est installé.
+9.2. **Accédez à votre terminal** sur le serveur où Elasticsearch est installé.
    
-9.2. **Générer un token d'enrollment** pour Kibana :
+9.3. **Générer un token d'enrollment** pour Kibana :
    Utilisez cette commande pour générer un token d'enrollment si vous ne l'avez pas encore fait :
    ```bash
    sudo /usr/share/elasticsearch/bin/elasticsearch-create-enrollment-token -s kibana
    ```
 
-9.3. **Copiez le token généré** dans le terminal.
+9.4. **Copiez le token généré** dans le terminal.
 
-9.4. **Collez-le dans Kibana** dans la boîte de dialogue que vous avez montrée, sous "Enrollment token".
+9.5. **Collez-le dans Kibana** dans la boîte de dialogue que vous avez montrée, sous "Enrollment token".
 
 ##### ===> Cela permettra à Kibana de se connecter à votre cluster Elasticsearch et de démarrer la configuration.
 
+---------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------
 
 10. **code de vérification pour lier Kibana à Elasticsearch.**
 
@@ -117,12 +152,15 @@ Une fois que vous avez le code, entrez-le dans les cases à l'écran de Kibana e
 Cela validera la connexion entre Kibana et Elasticsearch, et vous pourrez accéder à l'interface Kibana. 
 
 
-### 10.3. **Saisissez le code** :
+10.3. **Saisissez le code** :
 
 Une fois que vous avez le code, entrez-le dans les cases à l'écran de Kibana et cliquez sur **Verify**.
 
 Cela validera la connexion entre Kibana et Elasticsearch, et vous pourrez accéder à l'interface Kibana. Si vous rencontrez des problèmes pour exécuter la commande ou obtenir le code, n'hésitez pas à me le signaler.
 
+---------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------
 
 11. **Réinitialisation du mot de passe pour l'utilisateur `elastic`**
 
@@ -143,6 +181,12 @@ Le **mot de passe** pour l'utilisateur `elastic` vous est généralement donné 
 11.2. **Notez le nouveau mot de passe** généré ou entrez-en un nouveau lorsque cela vous est demandé.
 
 11.3. **Utilisez ce nouveau mot de passe** pour vous connecter à Kibana en tant qu'utilisateur `elastic`.
+
+
+---------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------
+
 
 
 
