@@ -12,12 +12,14 @@
    wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
    ```
 
-3. **Ajouter le dépôt Elastic** :
+3. **Ajouter le dépôt Elastic** (*regardez l'annexe 1*):
    Ajoutez le dépôt Elastic à votre liste de sources APT :
    ```bash
    echo "deb https://artifacts.elastic.co/packages/8.x/apt stable main" | sudo tee -a /etc/apt/sources.list.d/elastic-8.x.list
    ```
-   Assurez-vous de remplacer `8.x` par la version spécifique de votre installation Elasticsearch si nécessaire.
+
+# (*Regardez l'annexe 1*):
+*Assurez-vous de remplacer `8.x` par la version spécifique de votre installation Elasticsearch si nécessaire.*
 
 4. **Mettre à jour les dépôts** :
    ```bash
@@ -96,3 +98,22 @@ sudo systemctl status kibana
 4. **Collez-le dans Kibana** dans la boîte de dialogue que vous avez montrée, sous "Enrollment token".
 
 # ===> Cela permettra à Kibana de se connecter à votre cluster Elasticsearch et de démarrer la configuration.
+
+
+------------------
+# Annexe 1 :
+------------------
+
+# (*Regardez l'annexe 1*):
+*Assurez-vous de remplacer `8.x` par la version spécifique de votre installation Elasticsearch si nécessaire.*
+
+- Il est recommandé d'utiliser une version spécifique de Kibana compatible avec celle d'Elasticsearch pour garantir la stabilité et la compatibilité entre les deux services.
+- La série de versions doit correspondre, donc si vous utilisez Elasticsearch version 8.x, il est préférable d'installer Kibana de la même série 8.x pour éviter les incompatibilités. Cela s'applique aussi aux configurations et aux fonctionnalités avancées qui peuvent ne pas être prises en charge si les versions diffèrent.
+- Pour notre étape 3, vous pourriez ainsi adapter le dépôt Elastic en fonction de la version exacte d'Elasticsearch (par exemple, `8.8` si vous avez cette version spécifique), en modifiant l’URL :
+
+```bash
+echo "deb https://artifacts.elastic.co/packages/8.8/apt stable main" | sudo tee -a /etc/apt/sources.list.d/elastic-8.x.list
+``` 
+
+Ensuite, vous pourrez continuer les étapes d’installation.
+
