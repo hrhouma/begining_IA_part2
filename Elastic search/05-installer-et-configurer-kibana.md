@@ -85,20 +85,37 @@ sudo systemctl status kibana
 
 ### Pour obtenir le token d'enrollment, suivez ces étapes :
 
-1. **Accédez à votre terminal** sur le serveur où Elasticsearch est installé.
+9.1. **Accédez à votre terminal** sur le serveur où Elasticsearch est installé.
    
-2. **Générer un token d'enrollment** pour Kibana :
+9.2. **Générer un token d'enrollment** pour Kibana :
    Utilisez cette commande pour générer un token d'enrollment si vous ne l'avez pas encore fait :
    ```bash
    sudo /usr/share/elasticsearch/bin/elasticsearch-create-enrollment-token -s kibana
    ```
 
-3. **Copiez le token généré** dans le terminal.
+9.3. **Copiez le token généré** dans le terminal.
 
-4. **Collez-le dans Kibana** dans la boîte de dialogue que vous avez montrée, sous "Enrollment token".
+9.4. **Collez-le dans Kibana** dans la boîte de dialogue que vous avez montrée, sous "Enrollment token".
 
-# ===> Cela permettra à Kibana de se connecter à votre cluster Elasticsearch et de démarrer la configuration.
+##### ===> Cela permettra à Kibana de se connecter à votre cluster Elasticsearch et de démarrer la configuration.
 
+
+
+10. **code de vérification pour lier Kibana à Elasticsearch.**
+
+10.1. Exécutez la commande suivante :
+ 
+```bash
+sudo /usr/share/kibana/bin/kibana-verification-code
+```
+
+- Cette commande affichera un code à 6 chiffres que vous devrez entrer dans l'écran que vous avez partagé.
+
+10.2. **Saisissez le code** :
+
+Une fois que vous avez le code, entrez-le dans les cases à l'écran de Kibana et cliquez sur **Verify**.
+
+Cela validera la connexion entre Kibana et Elasticsearch, et vous pourrez accéder à l'interface Kibana. Si vous rencontrez des problèmes pour exécuter la commande ou obtenir le code, n'hésitez pas à me le signaler.
 
 ------------------
 # Annexe 1 :
