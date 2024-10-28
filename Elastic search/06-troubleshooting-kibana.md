@@ -1,19 +1,20 @@
 
-# erreur 1 
+# 1. Erreur 1 
 
 ```bash
 sudo systemctl enable elasticsearch
 sudo systemctl start elasticsearch
 curl -XGET localhost:9200
 ```
-### ==> ERREUR
+## ==> 1.1. ERREUR
 
 ```bash
 curl: (52) Empty reply from server
 ```
-### ==> RÉSOLUTION
+## ==> 1.2. RÉSOLUTION
 
 
+## ==> 1.3. AUTRES
 ### ==> AUTRES COMMANDES INTÉRESSANTES: ANENXE 01 - partie 01
 ### ==> AUTRES COMMANDES INTÉRESSANTES: ANENXE 01 - partie 02
 ### ==> AUTRES COMMANDES INTÉRESSANTES: ANENXE 01 - partie 03
