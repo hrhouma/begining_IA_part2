@@ -136,7 +136,7 @@ curl -u elastic:c+vdv5FUzys5hft5*8Fs -k -X GET 'https://localhost:9200/'
 -k : Cette option indique à curl d'ignorer les erreurs de validation du certificat SSL
 
 
-## ➔ 3.3. EXPLICATION DELA RÉSOLUTION
+## ➔ 3.3. EXPLICATION DE LA RÉSOLUTION
 
 Le problème rencontré ici est lié au certificat SSL auto-signé utilisé par Elasticsearch. Lorsque vous avez tenté d'accéder au serveur avec la commande `curl`, l'erreur suivante est apparue :
 
@@ -168,6 +168,102 @@ L'option `-k` vous a permis d'ignorer la vérification SSL et de vous connecter 
 
 ## ➔ 3.3. AUTRES
 ###### ➔ Pas d'annexe 3 :(
+
+
+-----------------------------------------------------------
+-----------------------------------------------------------
+-----------------------------------------------------------
+-----------------------------------------------------------
+-----------------------------------------------------------
+-----------------------------------------------------------
+
+
+# Erreur 4 (Pouvons-nous automatiser le tous ?)
+
+
+## ➔ 4.1. ERREUR
+
+```
+curl: (60) SSL certificate problem: self-signed certificate in certificate chain
+```
+
+
+## ➔ 4.2. RÉSOLUTION
+
+```
+Le script dans l'annexe 4-1 est correct et fonctionnera pour automatiser la configuration d’authentification `curl` pour Elasticsearch. 
+Mais il y a quelques points importants à vérifier et des améliorations possibles pour garantir son bon fonctionnement :
+```
+
+1. **SSL et Paramètre `-k` pour Ignorer les Certificats Auto-signés** :
+   Puisque Elasticsearch utilise un certificat auto-signé, il faut ajouter `-k` pour les requêtes `curl`, afin d'ignorer les erreurs SSL.
+
+   Modifiez la ligne de test de connexion à la fin du script pour inclure `-k` :
+   ```bash
+   curl -k -XGET "https://localhost:9200"
+   ```
+
+2. **Mise à jour des Identifiants** :
+   Assurez-vous de remplacer `your_password` par le mot de passe réel de votre utilisateur Elasticsearch avant d’exécuter le script.
+
+3. **Sécurisation** :
+   Comme le fichier `.curlrc` contiendra des informations d'identification sensibles, assurez-vous que les permissions sont bien définies (ce que le script fait avec `chmod 600`). Cela garantit que seul l’utilisateur actuel peut lire le fichier.
+
+4. **Alternative pour des Environnements de Production** :
+   Dans un environnement de production, plutôt que de désactiver la vérification SSL (`-k`), il serait préférable d'ajouter le certificat auto-signé au magasin de certificats de votre système pour éviter d'utiliser `-k` et améliorer la sécurité.
+
+### Version Mise à Jour du Script de celui dans l'annexe 4.1
+
+Voici la version finale du script avec l’ajout de `-k` pour la vérification SSL :
+
+```bash
+#!/bin/bash
+
+# Variables pour le nom d'utilisateur et le mot de passe Elasticsearch
+ES_USER="elastic"
+ES_PASSWORD="your_password"  # Remplacez par votre mot de passe réel
+
+# Chemin du fichier .curlrc pour stocker les identifiants
+CURLRC_PATH="$HOME/.curlrc"
+
+# Vérifie si Elasticsearch est en cours d'exécution
+echo "Vérification du statut d'Elasticsearch..."
+if systemctl is-active --quiet elasticsearch; then
+    echo "Elasticsearch est en cours d'exécution."
+else
+    echo "Elasticsearch n'est pas démarré. Tentative de démarrage..."
+    sudo systemctl start elasticsearch
+    sleep 5  # Attendre quelques secondes pour s'assurer qu'Elasticsearch démarre
+fi
+
+# Ajoute les identifiants au fichier .curlrc
+echo "Configuration de l'authentification pour les requêtes curl..."
+echo "user = \"$ES_USER:$ES_PASSWORD\"" > "$CURLRC_PATH"
+chmod 600 "$CURLRC_PATH"  # Sécuriser le fichier pour que seul l'utilisateur puisse y accéder
+
+# Vérifie si les identifiants ont été ajoutés avec succès
+if grep -q "$ES_USER" "$CURLRC_PATH"; then
+    echo "Authentification configurée avec succès dans $CURLRC_PATH"
+else
+    echo "Échec de la configuration de l'authentification."
+fi
+
+# Test de connexion pour vérifier que tout fonctionne
+echo "Test de connexion à Elasticsearch..."
+curl -k -XGET "https://localhost:9200"
+```
+
+En utilisant ce script, vous pourrez automatiser la configuration pour `curl` avec l’authentification Elasticsearch, et la connexion devrait fonctionner même si Elasticsearch utilise un certificat auto-signé.
+
+
+
+
+## ➔ 4.3. AUTRES
+###### ➔ ANENXE 04 - partie 01 
+
+
+
+
 
 
 -----------------------------------------------------------
@@ -418,7 +514,7 @@ En utilisant une des méthodes ci-dessus, vous pourrez éviter l'authentificatio
 -----------------------------------------------------------
 
 --------------------
-# ANENXE 04 - partie 01 - automatiser le tous via un script version initiale à ignorer
+# ANENXE 04 - partie 01 - automatiser le tous via un script version initiale à ignorer (correction dans la partie --> Erreur 4 (Pouvons-nous automatiser le tous ?))
 --------------------
 
 ### Pouvons-nous automatiser le tous via un script ?
