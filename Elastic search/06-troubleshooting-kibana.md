@@ -60,9 +60,16 @@ curl: (52) Empty reply from server
 ## ➔ 2.2. RÉSOLUTION
 
 ```bash
-
+sudo /usr/share/elasticsearch/bin/elasticsearch-reset-password -u elastic  (pour générer un nouveau mot de passe)
 curl -u elastic:c+vdv5FUzys5hft5*8Fs -k -X GET 'https://localhost:9200/'
 ```
+
+
+## ➔ 2.3. AUTRES
+###### ➔ AUTRES COMMANDES INTÉRESSANTES: ANENXE 02 - partie 01
+###### ➔  AUTRES COMMANDES INTÉRESSANTES: ANENXE 02 - partie 02
+
+
 
 
 -----------------------------------------------------------
