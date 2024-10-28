@@ -1,5 +1,5 @@
 
-# 1. Erreur 1 
+# 1. Erreur 1 (sans les guillemets )
 
 ```bash
 sudo systemctl enable elasticsearch
@@ -48,7 +48,7 @@ En résumé, cette commande permet d'envoyer une requête `GET` vers `https://lo
 
 
 
-# Erreur 2
+# Erreur 2 (sans le -u , sans le password, sans le -k)
 
 
 ```bash
@@ -78,28 +78,74 @@ curl -u elastic:c+vdv5FUzys5hft5*8Fs -k -X GET 'https://localhost:9200/' (ette o
 
 
 ## ➔ 2.3. AUTRES
-###### ➔ AUTRES COMMANDES INTÉRESSANTES: ANENXE 02 - partie 01
-###### ➔  AUTRES COMMANDES INTÉRESSANTES: ANENXE 02 - partie 02
-
-
-
-
------------------------------------------------------------
------------------------------------------------------------
------------------------------------------------------------
-
-
-
-
-
-
-
+###### ➔ Pas d'annexe 2 :(
 
 
 
 -----------------------------------------------------------
 -----------------------------------------------------------
 -----------------------------------------------------------
+-----------------------------------------------------------
+-----------------------------------------------------------
+-----------------------------------------------------------
+
+# Erreur 3 (sans le -k)
+
+```bash
+curl -u elastic:c+vdv5FUzys5hft5*8Fs -X GET 'https://localhost:9200/'
+```
+
+## ➔ 3.1. ERREUR
+
+```bash
+curl: (60) SSL certificate problem: self-signed certificate in certificate chain
+```
+
+```bash
+More details here: https://curl.se/docs/sslcerts.html
+
+curl failed to verify the legitimacy of the server and therefore could not
+establish a secure connection to it. To learn more about this situation and
+how to fix it, please visit the web page mentioned above.
+```
+
+
+## ➔ 3.2. RÉSOLUTION
+
+```bash
+curl -u elastic:c+vdv5FUzys5hft5*8Fs -k -X GET 'https://localhost:9200/'
+{
+  "name" : "elasticSrv1",
+  "cluster_name" : "elasticsearch",
+  "cluster_uuid" : "koIiPy-iTY6IuEnzMuhXEw",
+  "version" : {
+    "number" : "8.15.3",
+    "build_flavor" : "default",
+    "build_type" : "deb",
+    "build_hash" : "f97532e680b555c3a05e73a74c28afb666923018",
+    "build_date" : "2024-10-09T22:08:00.328917561Z",
+    "build_snapshot" : false,
+    "lucene_version" : "9.11.1",
+    "minimum_wire_compatibility_version" : "7.17.0",
+    "minimum_index_compatibility_version" : "7.0.0"
+  },
+  "tagline" : "You Know, for Search"
+}
+
+```
+
+-k : Cette option indique à curl d'ignorer les erreurs de validation du certificat SSL
+
+
+
+-----------------------------------------------------------
+-----------------------------------------------------------
+-----------------------------------------------------------
+-----------------------------------------------------------
+-----------------------------------------------------------
+-----------------------------------------------------------
+
+
 
 --------------------
 # ANENXE 01 - partie 01
@@ -308,9 +354,91 @@ En utilisant une des méthodes ci-dessus, vous pourrez éviter l'authentificatio
 
 
 
+-----------------------------------------------------------
+-----------------------------------------------------------
+-----------------------------------------------------------
+-----------------------------------------------------------
+-----------------------------------------------------------
+-----------------------------------------------------------
+
+--------------------
+# ANENXE 02 - pas d'annexe 02
+--------------------
 
 
+-----------------------------------------------------------
+-----------------------------------------------------------
+-----------------------------------------------------------
+-----------------------------------------------------------
+-----------------------------------------------------------
+-----------------------------------------------------------
 
+--------------------
+# ANENXE 03 - partie 01 - automatiser le tous via un script version initiale à ignorer
+--------------------
+
+### Pouvons-nous automatiser le tous via un script ?
+
+
+Oui, vous pouvez automatiser ce processus via un script shell. Voici un exemple de script qui configure automatiquement `curl` avec les informations d'identification pour Elasticsearch en créant un fichier `.curlrc` dans le répertoire de l'utilisateur. 
+
+Ce script vérifie également si Elasticsearch est en cours d'exécution et configure temporairement la sécurité en fonction de vos besoins.
+
+### Script Shell pour automatiser l'ajout des identifiants `curl`
+
+```bash
+#!/bin/bash
+
+# Variables pour le nom d'utilisateur et le mot de passe Elasticsearch
+ES_USER="elastic"
+ES_PASSWORD="your_password"  # Remplacez par votre mot de passe réel
+
+# Chemin du fichier .curlrc pour stocker les identifiants
+CURLRC_PATH="$HOME/.curlrc"
+
+# Vérifie si Elasticsearch est en cours d'exécution
+echo "Vérification du statut d'Elasticsearch..."
+if systemctl is-active --quiet elasticsearch; then
+    echo "Elasticsearch est en cours d'exécution."
+else
+    echo "Elasticsearch n'est pas démarré. Tentative de démarrage..."
+    sudo systemctl start elasticsearch
+    sleep 5  # Attendre quelques secondes pour s'assurer qu'Elasticsearch démarre
+fi
+
+# Ajoute les identifiants au fichier .curlrc
+echo "Configuration de l'authentification pour les requêtes curl..."
+echo "user = \"$ES_USER:$ES_PASSWORD\"" > "$CURLRC_PATH"
+chmod 600 "$CURLRC_PATH"  # Sécuriser le fichier pour que seul l'utilisateur puisse y accéder
+
+# Vérifie si les identifiants ont été ajoutés avec succès
+if grep -q "$ES_USER" "$CURLRC_PATH"; then
+    echo "Authentification configurée avec succès dans $CURLRC_PATH"
+else
+    echo "Échec de la configuration de l'authentification."
+fi
+
+# Test de connexion pour vérifier que tout fonctionne
+echo "Test de connexion à Elasticsearch..."
+curl -XGET "http://localhost:9200"
+```
+
+### Explications
+
+1. **Définition des identifiants** : Modifiez `ES_USER` et `ES_PASSWORD` pour correspondre aux informations d'identification Elasticsearch.
+2. **Création de `.curlrc`** : Le script ajoute les identifiants dans le fichier `.curlrc` pour automatiser les requêtes `curl` avec authentification.
+3. **Test de connexion** : Après la configuration, le script exécute une requête `curl` pour vérifier qu'Elasticsearch répond.
+
+### Exécution du script
+
+Enregistrez ce script sous le nom `configure_elastic.sh`, puis rendez-le exécutable et lancez-le :
+
+```bash
+chmod +x configure_elastic.sh
+./configure_elastic.sh
+```
+
+Ce script configure `curl` pour qu'il utilise automatiquement vos informations d'identification pour Elasticsearch.
 
 
 
