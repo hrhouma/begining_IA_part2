@@ -136,6 +136,39 @@ curl -u elastic:c+vdv5FUzys5hft5*8Fs -k -X GET 'https://localhost:9200/'
 -k : Cette option indique à curl d'ignorer les erreurs de validation du certificat SSL
 
 
+## ➔ 3.3. EXPLICATION DELA RÉSOLUTION
+
+Le problème rencontré ici est lié au certificat SSL auto-signé utilisé par Elasticsearch. Lorsque vous avez tenté d'accéder au serveur avec la commande `curl`, l'erreur suivante est apparue :
+
+```
+curl: (60) SSL certificate problem: self-signed certificate in certificate chain
+```
+
+### Explication de l'erreur
+Cette erreur signifie que `curl` a tenté de vérifier le certificat SSL présenté par le serveur Elasticsearch mais a échoué. Le certificat est auto-signé, ce qui signifie qu'il n'a pas été émis par une autorité de certification (CA) reconnue et de confiance. Par défaut, `curl` exige que le certificat soit signé par une CA pour garantir une connexion sécurisée et éviter les connexions potentiellement compromises.
+
+### Solutions au problème
+
+1. **Utilisation de l'option `-k` ou `--insecure` avec `curl`** :
+   En utilisant l'option `-k`, comme dans la commande suivante :
+   ```bash
+   curl -u elastic:c+vdv5FUzys5hft5*8Fs -k -X GET 'https://localhost:9200/'
+   ```
+   Vous indiquez à `curl` d'ignorer l'erreur de vérification du certificat SSL et de procéder malgré l'absence de vérification. C'est pourquoi cette commande a fonctionné : `curl` a ignoré la vérification du certificat auto-signé et a établi une connexion.
+
+2. **Ajout du certificat auto-signé aux certificats de confiance** (pour éviter d'utiliser `-k`) :
+   Si vous souhaitez éviter d'utiliser l'option `-k` pour chaque requête et préférez que le certificat auto-signé soit considéré comme "fiable" par `curl`, vous pouvez ajouter le certificat d’Elasticsearch aux certificats de confiance de votre système. Cela rend la vérification SSL possible même avec un certificat auto-signé.
+
+3. **Utiliser un certificat émis par une CA reconnue** :
+   Si Elasticsearch est utilisé dans un environnement de production, il est recommandé d’utiliser un certificat signé par une autorité de certification reconnue pour éviter d’ignorer les erreurs de vérification. Vous pouvez obtenir un certificat SSL valide auprès d'une CA ou configurer un certificat Let's Encrypt pour les environnements accessibles publiquement.
+
+### En résumé
+L'option `-k` vous a permis d'ignorer la vérification SSL et de vous connecter avec succès à Elasticsearch. Toutefois, cette solution est principalement recommandée pour des environnements de test, car elle désactive une mesure de sécurité importante. Pour une utilisation à long terme, envisagez l'ajout du certificat auto-signé aux certificats de confiance de votre système ou l'obtention d'un certificat signé.
+
+
+## ➔ 3.3. AUTRES
+###### ➔ Pas d'annexe 3 :(
+
 
 -----------------------------------------------------------
 -----------------------------------------------------------
@@ -373,7 +406,19 @@ En utilisant une des méthodes ci-dessus, vous pourrez éviter l'authentificatio
 -----------------------------------------------------------
 
 --------------------
-# ANENXE 03 - partie 01 - automatiser le tous via un script version initiale à ignorer
+# ANENXE 03 - pas d'annexe 03
+--------------------
+
+
+-----------------------------------------------------------
+-----------------------------------------------------------
+-----------------------------------------------------------
+-----------------------------------------------------------
+-----------------------------------------------------------
+-----------------------------------------------------------
+
+--------------------
+# ANENXE 04 - partie 01 - automatiser le tous via un script version initiale à ignorer
 --------------------
 
 ### Pouvons-nous automatiser le tous via un script ?
