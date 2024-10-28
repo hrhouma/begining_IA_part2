@@ -381,7 +381,7 @@ La sortie de cette commande indiquera le numéro de ligne où le paramètre `xpa
 -----------------------------------------------------------
 -----------------------------------------------------------
 
-
+# Erreur 7
 
 --------------------
 # Objectif - Créer, configurer et exécuter le script `configure_elastic.sh` pour automatiser l’authentification `curl` avec Elasticsearch
@@ -484,10 +484,121 @@ Ce tutoriel vous guide pas à pas pour configurer et exécuter le script `config
 -----------------------------------------------------------
 -----------------------------------------------------------
 
+# Erreur 8 - Éviter de saisir le mot de passe à chaque requête `curl
+#  nano /home/eleve/.curlrc ou  nano /root/.curlrc ?
+--------------------
+
+- En suivant ces étapes, vous éviterez de saisir le mot de passe à chaque requête `curl`, et le fichier `.curlrc` stockera les informations d'identification de manière pratique et sécurisée.
+
+- Voici comment utiliser un fichier `.curlrc` pour stocker les informations d'identification de manière à ce que `curl` n'ait plus besoin que vous entriez manuellement l’utilisateur et le mot de passe à chaque requête.
+
+### Étape 1 : Créer le fichier `.curlrc`
+
+1. Utilisez `nano` pour créer le fichier `.curlrc` dans le répertoire de l’utilisateur `eleve` :
+   ```bash
+   nano /home/eleve/.curlrc
+   ```
+
+2. Ajoutez les informations d'identification dans le fichier `.curlrc` sous la forme suivante :
+   ```bash
+   user = "elastic:c+vdv5FUzys5hft5*8Fs"
+   ```
+
+   - **user** : Le nom d’utilisateur pour Elasticsearch (`elastic`).
+   - **c+vdv5FUzys5hft5*8Fs** : Le mot de passe associé à l’utilisateur `elastic`.
+   - Assurez-vous de remplacer ces informations si vos identifiants changent.
+
+3. **Enregistrez et quittez** `nano` :
+   - Appuyez sur `Ctrl + X`, puis `Y` pour confirmer et `Enter` pour sauvegarder.
+
+### Étape 2 : Protéger le fichier `.curlrc`
+
+Pour sécuriser le fichier et s'assurer qu'il est accessible uniquement par l'utilisateur `eleve`, définissez les permissions avec la commande suivante :
+```bash
+chmod 600 /home/eleve/.curlrc
+```
+
+### Étape 3 : Tester la configuration
+
+Maintenant, chaque fois que vous utiliserez `curl` sans spécifier d’utilisateur, `curl` ajoutera automatiquement les informations d'identification à partir du fichier `.curlrc`. 
+
+Par exemple, pour tester la connexion à Elasticsearch avec `curl`, vous pouvez exécuter la commande suivante :
+```bash
+curl -k -X GET 'https://localhost:9200/'
+```
+
+L'option `-k` est utilisée ici pour ignorer les erreurs SSL, car Elasticsearch utilise un certificat auto-signé.
+
+---
+
+# ==> erreur : 
+
+```bash
+curl -k -X GET 'https://localhost:9200/'
+{"error":{"root_cause":[{"type":"security_exception","reason":"missing authentication credentials for REST request [/]","header":{"WWW-Authenticate":["Basic realm=\"security\", charset=\"UTF-8\"","Bearer realm=\"security\"","ApiKey"]}}],"type":"security_exception","reason":"missing authentication credentials for REST request [/]","header":{"WWW-Authenticate":["Basic realm=\"security\", charset=\"UTF-8\"","Bearer realm=\"security\"","ApiKey"]}},"status":401}root@elasticSrv1:/hroot@elasticSrv1:/home/eleve# sudo systemctl restart elasticsearch
+root@elasticSrv1:/home/eleve# curl -k -X GET 'https://localhost:9200/'
+{"error":{"root_cause":[{"type":"security_exception","reason":"missing authentication credentials for REST request [/]","header":{"WWW-Authenticate":["Basic realm=\"security\", charset=\"UTF-8\"","Bearer realm=\"security\"","ApiKey"]}}],"type":"security_exception","reason":"missing authentication credentials for REST request [/]","header":{"WWW-Authenticate":["Basic realm=\"security\", charset=\"UTF-8\"","Bearer realm=\"security\"","ApiKey"]}},"status":401}r
+```
+
+
+## ➔ 8.1. RÉSOLUTION
 
 
 
+Il semble que malgré l'utilisation du fichier `.curlrc`, les informations d'identification ne sont pas prises en compte automatiquement par `curl`, ce qui entraîne l'erreur d'authentification. Voici quelques solutions pour résoudre ce problème :
 
+### Solution 1 : Vérifiez le contenu et le chemin du fichier `.curlrc`
+
+Assurez-vous que le fichier `.curlrc` est bien créé dans le répertoire de l'utilisateur qui exécute `curl`. Si vous utilisez `root`, placez le fichier dans le répertoire `/root/` au lieu de `/home/eleve/`.
+
+1. **Vérifiez le contenu du fichier `.curlrc`** :
+   ```bash
+   cat /root/.curlrc
+   ```
+   Le fichier doit contenir exactement :
+   ```bash
+   user = "elastic:c+vdv5FUzys5hft5*8Fs"
+   ```
+
+2. **Vérifiez les permissions du fichier** :
+   Assurez-vous que le fichier `.curlrc` a bien les permissions `600` :
+   ```bash
+   chmod 600 /root/.curlrc
+   ```
+
+3. **Exécutez `curl` en tant que `root`** :
+   Si vous êtes connecté en tant que `root`, essayez la commande suivante :
+   ```bash
+   curl -k -X GET 'https://localhost:9200/'
+   ```
+
+### Solution 2 : Utiliser directement l'option `-u` avec `curl`
+
+Si le fichier `.curlrc` ne fonctionne toujours pas, utilisez l'option `-u` pour spécifier manuellement les informations d'identification dans la commande `curl` :
+
+```bash
+curl -u elastic:c+vdv5FUzys5hft5*8Fs -k -X GET 'https://localhost:9200/'
+```
+
+### Solution 3 : Vérifiez la configuration Elasticsearch
+
+Si vous continuez à rencontrer des problèmes, il est possible qu'il y ait une configuration erronée dans `elasticsearch.yml`. Assurez-vous que la sécurité est bien activée et que les paramètres sont corrects. Vous devriez avoir dans `/etc/elasticsearch/elasticsearch.yml` :
+
+```yaml
+xpack.security.enabled: true
+xpack.security.http.ssl.enabled: true
+```
+
+Après chaque modification dans `elasticsearch.yml`, redémarrez Elasticsearch :
+```bash
+sudo systemctl restart elasticsearch
+```
+
+### Solution 4 : Testez l'authentification avec un autre outil (comme `Postman`)
+
+Pour vérifier si le problème vient de `curl` ou de la configuration Elasticsearch, essayez de vous connecter à `https://localhost:9200/` avec les identifiants via un outil comme **Postman** (ou un autre client HTTP) en utilisant l’authentification de base.
+
+Ces étapes devraient aider à isoler le problème. Si cela persiste, cela peut être dû à un problème de configuration plus profond dans Elasticsearch ou dans votre environnement `curl`.
 
 
 
@@ -912,38 +1023,71 @@ Ce tutoriel vous guide pas à pas pour configurer et exécuter le script `config
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+-----------------------------------------------------------
+-----------------------------------------------------------
+-----------------------------------------------------------
 -----------------------------------------------------------
 -----------------------------------------------------------
 -----------------------------------------------------------
 
------------------------------------------------------------
------------------------------------------------------------
------------------------------------------------------------
 
------------------------------------------------------------
------------------------------------------------------------
------------------------------------------------------------
+--------------------
+# ANENXE 08- partie 01 - cat /root/.curlrc
+--------------------
+
+
+Le message `No such file or directory` indique que le fichier `.curlrc` n'existe pas dans le répertoire `/root/`. Si vous êtes connecté en tant que `root` et que vous souhaitez que `curl` utilise automatiquement les informations d’identification, créez ce fichier `.curlrc` dans le répertoire `/root/` avec les informations appropriées.
+
+Voici comment faire :
+
+### Étape 1 : Créer le fichier `.curlrc` dans le répertoire `/root/`
+
+1. Ouvrez un éditeur de texte pour créer le fichier `.curlrc` :
+   ```bash
+   nano /root/.curlrc
+   ```
+
+2. Ajoutez les informations d'identification dans le fichier sous la forme suivante :
+   ```bash
+   user = "elastic:c+vdv5FUzys5hft5*8Fs"
+   ```
+   Remplacez `c+vdv5FUzys5hft5*8Fs` par le mot de passe réel de l’utilisateur `elastic`.
+
+3. **Enregistrez et quittez** l'éditeur :
+   - Appuyez sur `Ctrl + X`, puis `Y` pour confirmer et `Enter` pour sauvegarder.
+
+### Étape 2 : Définir les permissions du fichier `.curlrc`
+
+Assurez-vous que seul `root` a accès au fichier en définissant les permissions :
+```bash
+chmod 600 /root/.curlrc
+```
+
+### Étape 3 : Tester la commande `curl`
+
+Essayez maintenant d'exécuter la commande `curl` sans spécifier les informations d'identification. `curl` devrait automatiquement utiliser celles contenues dans le fichier `.curlrc` :
+```bash
+curl -k -X GET 'https://localhost:9200/'
+```
+
+En ayant le fichier `.curlrc` correctement configuré dans `/root/`, `curl` devrait désormais utiliser les informations d’identification automatiquement pour chaque requête.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 -----------------------------------------------------------
 -----------------------------------------------------------
