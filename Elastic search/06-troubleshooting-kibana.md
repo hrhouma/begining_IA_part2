@@ -275,6 +275,234 @@ En utilisant ce script, vous pourrez automatiser la configuration pour `curl` av
 
 
 
+
+
+
+
+
+
+
+
+# Erreur 5 (grep dans un fichier volumineux ?)
+
+
+## ➔ 5.1. ERREUR
+
+```
+Je veux effectuer un grep de ca xpack.security.enabled: dans /etc/elasticsearch/elasticsearch.yml
+
+```
+
+
+## ➔ 5.2. RÉSOLUTION
+
+
+- Pour rechercher la présence de `xpack.security.enabled:` dans le fichier `/etc/elasticsearch/elasticsearch.yml`, vous pouvez utiliser la commande suivante :
+
+```bash
+grep "xpack.security.enabled:" /etc/elasticsearch/elasticsearch.yml
+```
+
+### Explication
+
+- `grep "xpack.security.enabled:"` : recherche la ligne contenant `xpack.security.enabled:`.
+- `/etc/elasticsearch/elasticsearch.yml` : indique le fichier dans lequel faire la recherche.
+
+### Variante pour Voir les Lignes Contenant “enabled” dans le Contexte d’En-têtes
+Si vous voulez voir toutes les lignes contenant “enabled” dans le fichier :
+
+```bash
+grep "enabled" /etc/elasticsearch/elasticsearch.yml
+```
+
+Cela affichera toutes les occurrences du mot `enabled` dans le fichier de configuration Elasticsearch, y compris le paramètre de sécurité `xpack.security.enabled`.
+
+
+
+
+
+## ➔ 5.3. AUTRES
+###### ➔ ANENXE 05 - pas d'annexes :(
+
+
+
+
+-----------------------------------------------------------
+-----------------------------------------------------------
+-----------------------------------------------------------
+-----------------------------------------------------------
+-----------------------------------------------------------
+-----------------------------------------------------------
+
+
+
+
+# Erreur 6 (grep dans un fichier volumineux + numéro de la ligne ?)
+
+
+## ➔ 6.1. ERREUR
+
+```
+Je veux effectuer un grep de ca xpack.security.enabled: dans /etc/elasticsearch/elasticsearch.yml + NUMÉRO DE LA LIGNE
+
+```
+
+
+## ➔ 6.2. RÉSOLUTION
+
+Pour afficher le numéro de ligne où `xpack.security.enabled:` se trouve dans le fichier `/etc/elasticsearch/elasticsearch.yml`, utilisez l'option `-n` avec `grep` :
+
+```bash
+grep -n "xpack.security.enabled:" /etc/elasticsearch/elasticsearch.yml
+```
+
+### Explication
+
+- `-n` : affiche le numéro de ligne pour chaque correspondance.
+- `"xpack.security.enabled:"` : la chaîne que vous recherchez.
+- `/etc/elasticsearch/elasticsearch.yml` : le fichier dans lequel la recherche est effectuée.
+
+La sortie de cette commande indiquera le numéro de ligne où le paramètre `xpack.security.enabled` est défini, ce qui vous permettra de le localiser facilement dans le fichier.
+
+
+
+
+## ➔ 6.3. AUTRES
+###### ➔ ANENXE 05 - pas d'annexes :(
+
+
+
+
+
+-----------------------------------------------------------
+-----------------------------------------------------------
+-----------------------------------------------------------
+-----------------------------------------------------------
+-----------------------------------------------------------
+-----------------------------------------------------------
+
+
+
+--------------------
+# Objectif - Créer, configurer et exécuter le script `configure_elastic.sh` pour automatiser l’authentification `curl` avec Elasticsearch
+--------------------
+
+Comment créer, configurer et exécuter le script `configure_elastic.sh` pour automatiser l’authentification `curl` avec Elasticsearch ?
+
+### Étape 1 : Créer le script `configure_elastic.sh`
+
+1. Ouvrez un terminal et utilisez `nano` pour créer le fichier de script.
+   ```bash
+   nano configure_elastic.sh
+   ```
+   
+2. Dans l'éditeur `nano`, copiez et collez le script suivant :
+
+   ```bash
+   #!/bin/bash
+
+   # Variables pour le nom d'utilisateur et le mot de passe Elasticsearch
+   ES_USER="elastic"
+   ES_PASSWORD="your_password"  # Remplacez par votre mot de passe réel
+
+   # Chemin du fichier .curlrc pour stocker les identifiants
+   CURLRC_PATH="$HOME/.curlrc"
+
+   # Vérifie si Elasticsearch est en cours d'exécution
+   echo "Vérification du statut d'Elasticsearch..."
+   if systemctl is-active --quiet elasticsearch; then
+       echo "Elasticsearch est en cours d'exécution."
+   else
+       echo "Elasticsearch n'est pas démarré. Tentative de démarrage..."
+       sudo systemctl start elasticsearch
+       sleep 5  # Attendre quelques secondes pour s'assurer qu'Elasticsearch démarre
+   fi
+
+   # Ajoute les identifiants au fichier .curlrc
+   echo "Configuration de l'authentification pour les requêtes curl..."
+   echo "user = \"$ES_USER:$ES_PASSWORD\"" > "$CURLRC_PATH"
+   chmod 600 "$CURLRC_PATH"  # Sécuriser le fichier pour que seul l'utilisateur puisse y accéder
+
+   # Vérifie si les identifiants ont été ajoutés avec succès
+   if grep -q "$ES_USER" "$CURLRC_PATH"; then
+       echo "Authentification configurée avec succès dans $CURLRC_PATH"
+   else
+       echo "Échec de la configuration de l'authentification."
+   fi
+
+   # Test de connexion pour vérifier que tout fonctionne
+   echo "Test de connexion à Elasticsearch..."
+   curl -k -XGET "https://localhost:9200"
+   ```
+
+3. **Enregistrez et quittez** `nano` :
+   - Appuyez sur `Ctrl + X`, puis `Y` pour confirmer et `Enter` pour sauvegarder.
+
+### Étape 2 : Rendre le script exécutable
+
+1. Utilisez la commande suivante pour ajouter les permissions d'exécution au script :
+   ```bash
+   chmod +x configure_elastic.sh
+   ```
+
+### Étape 3 : Exécuter le script
+
+1. Lancez le script pour configurer l'authentification `curl` pour Elasticsearch :
+   ```bash
+   ./configure_elastic.sh
+   ```
+
+### Explications du script
+
+- **Définition des identifiants** : 
+  Le script définit les variables `ES_USER` et `ES_PASSWORD` pour les informations d’identification Elasticsearch. Remplacez `"your_password"` par le mot de passe réel.
+
+- **Vérification du statut d'Elasticsearch** :
+  Le script vérifie si le service Elasticsearch est actif et tente de le démarrer si nécessaire.
+
+- **Création du fichier `.curlrc`** :
+  Le script crée un fichier `.curlrc` contenant les informations d'identification pour que `curl` puisse se connecter automatiquement.
+
+- **Sécurisation du fichier `.curlrc`** :
+  La commande `chmod 600` garantit que seul l'utilisateur actuel peut lire le fichier `.curlrc`, car il contient des informations sensibles.
+
+- **Test de connexion avec `curl`** :
+  Le script effectue une requête `curl` vers Elasticsearch en utilisant l’option `-k` pour ignorer les erreurs de certificat auto-signé.
+
+### Vérification
+
+- **Test de Connexion** : Une fois le script exécuté, le dernier message devrait afficher des informations provenant d'Elasticsearch, confirmant que la connexion fonctionne.
+
+Ce tutoriel vous guide pas à pas pour configurer et exécuter le script `configure_elastic.sh`, afin d'automatiser l'authentification de `curl` avec Elasticsearch en utilisant un certificat auto-signé.
+
+
+
+-----------------------------------------------------------
+-----------------------------------------------------------
+-----------------------------------------------------------
+-----------------------------------------------------------
+-----------------------------------------------------------
+-----------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 --------------------
 # ANENXE 01 - partie 01
 --------------------
@@ -582,6 +810,108 @@ Ce script configure `curl` pour qu'il utilise automatiquement vos informations d
 
 
 
+-----------------------------------------------------------
+-----------------------------------------------------------
+-----------------------------------------------------------
+-----------------------------------------------------------
+-----------------------------------------------------------
+-----------------------------------------------------------
+
+
+--------------------
+# ANENXE 07 - partie 01 - Créer, configurer et exécuter le script `configure_elastic.sh` pour automatiser l’authentification `curl` avec Elasticsearch
+--------------------
+
+Voici un tutoriel détaillé pour créer, configurer et exécuter le script `configure_elastic.sh` pour automatiser l’authentification `curl` avec Elasticsearch.
+
+### Étape 1 : Créer le script `configure_elastic.sh`
+
+1. Ouvrez un terminal et utilisez `nano` pour créer le fichier de script.
+   ```bash
+   nano configure_elastic.sh
+   ```
+   
+2. Dans l'éditeur `nano`, copiez et collez le script suivant :
+
+   ```bash
+   #!/bin/bash
+
+   # Variables pour le nom d'utilisateur et le mot de passe Elasticsearch
+   ES_USER="elastic"
+   ES_PASSWORD="your_password"  # Remplacez par votre mot de passe réel
+
+   # Chemin du fichier .curlrc pour stocker les identifiants
+   CURLRC_PATH="$HOME/.curlrc"
+
+   # Vérifie si Elasticsearch est en cours d'exécution
+   echo "Vérification du statut d'Elasticsearch..."
+   if systemctl is-active --quiet elasticsearch; then
+       echo "Elasticsearch est en cours d'exécution."
+   else
+       echo "Elasticsearch n'est pas démarré. Tentative de démarrage..."
+       sudo systemctl start elasticsearch
+       sleep 5  # Attendre quelques secondes pour s'assurer qu'Elasticsearch démarre
+   fi
+
+   # Ajoute les identifiants au fichier .curlrc
+   echo "Configuration de l'authentification pour les requêtes curl..."
+   echo "user = \"$ES_USER:$ES_PASSWORD\"" > "$CURLRC_PATH"
+   chmod 600 "$CURLRC_PATH"  # Sécuriser le fichier pour que seul l'utilisateur puisse y accéder
+
+   # Vérifie si les identifiants ont été ajoutés avec succès
+   if grep -q "$ES_USER" "$CURLRC_PATH"; then
+       echo "Authentification configurée avec succès dans $CURLRC_PATH"
+   else
+       echo "Échec de la configuration de l'authentification."
+   fi
+
+   # Test de connexion pour vérifier que tout fonctionne
+   echo "Test de connexion à Elasticsearch..."
+   curl -k -XGET "https://localhost:9200"
+   ```
+
+3. **Enregistrez et quittez** `nano` :
+   - Appuyez sur `Ctrl + X`, puis `Y` pour confirmer et `Enter` pour sauvegarder.
+
+### Étape 2 : Rendre le script exécutable
+
+1. Utilisez la commande suivante pour ajouter les permissions d'exécution au script :
+   ```bash
+   chmod +x configure_elastic.sh
+   ```
+
+### Étape 3 : Exécuter le script
+
+1. Lancez le script pour configurer l'authentification `curl` pour Elasticsearch :
+   ```bash
+   ./configure_elastic.sh
+   ```
+
+### Explications du script
+
+- **Définition des identifiants** : 
+  Le script définit les variables `ES_USER` et `ES_PASSWORD` pour les informations d’identification Elasticsearch. Remplacez `"your_password"` par le mot de passe réel.
+
+- **Vérification du statut d'Elasticsearch** :
+  Le script vérifie si le service Elasticsearch est actif et tente de le démarrer si nécessaire.
+
+- **Création du fichier `.curlrc`** :
+  Le script crée un fichier `.curlrc` contenant les informations d'identification pour que `curl` puisse se connecter automatiquement.
+
+- **Sécurisation du fichier `.curlrc`** :
+  La commande `chmod 600` garantit que seul l'utilisateur actuel peut lire le fichier `.curlrc`, car il contient des informations sensibles.
+
+- **Test de connexion avec `curl`** :
+  Le script effectue une requête `curl` vers Elasticsearch en utilisant l’option `-k` pour ignorer les erreurs de certificat auto-signé.
+
+### Vérification
+
+- **Test de Connexion** : Une fois le script exécuté, le dernier message devrait afficher des informations provenant d'Elasticsearch, confirmant que la connexion fonctionne.
+
+Ce tutoriel vous guide pas à pas pour configurer et exécuter le script `configure_elastic.sh`, afin d'automatiser l'authentification de `curl` avec Elasticsearch en utilisant un certificat auto-signé.
+
+
+
 
 
 
@@ -637,430 +967,3 @@ Ce script configure `curl` pour qu'il utilise automatiquement vos informations d
 root@elasticSrv1:/home/eleve# history
 
 ```
-
------------------------------------------------------------
------------------------------------------------------------
------------------------------------------------------------
-
-
-
-
-# erreur 1 
-
-
-```bash
-root@elasticSrv1:/home/eleve# history
-
-```
-
------------------------------------------------------------
------------------------------------------------------------
------------------------------------------------------------
-
-
-
-
-# erreur 1 
-
-
-```bash
-root@elasticSrv1:/home/eleve# history
-
-```
-
------------------------------------------------------------
------------------------------------------------------------
------------------------------------------------------------
-
-
-
-
-# erreur 1 
-
-
-```bash
-root@elasticSrv1:/home/eleve# history
-
-```
-
------------------------------------------------------------
------------------------------------------------------------
------------------------------------------------------------
-
-
-
-
-# erreur 1 
-
-
-```bash
-root@elasticSrv1:/home/eleve# history
-
-```
-
------------------------------------------------------------
------------------------------------------------------------
------------------------------------------------------------
-
-
-
-
-# erreur 1 
-
-
-```bash
-root@elasticSrv1:/home/eleve# history
-
-```
-
------------------------------------------------------------
------------------------------------------------------------
------------------------------------------------------------
-
-
-
-# erreur 1 
-
-
-```bash
-root@elasticSrv1:/home/eleve# history
-
-```
-
------------------------------------------------------------
------------------------------------------------------------
------------------------------------------------------------
-
-
-
-# erreur 1 
-
-
-```bash
-root@elasticSrv1:/home/eleve# history
-
-```
-
------------------------------------------------------------
------------------------------------------------------------
------------------------------------------------------------
-
-
-
-# erreur 1 
-
-
-```bash
-root@elasticSrv1:/home/eleve# history
-
-```
-
------------------------------------------------------------
------------------------------------------------------------
------------------------------------------------------------
-
-
-# erreur 1 
-
-
-```bash
-root@elasticSrv1:/home/eleve# history
-
-```
-
------------------------------------------------------------
------------------------------------------------------------
------------------------------------------------------------
-
-
-
-# erreur 1 
-
-
-```bash
-root@elasticSrv1:/home/eleve# history
-
-```
-
------------------------------------------------------------
------------------------------------------------------------
------------------------------------------------------------
-
-
-
-
-# erreur 1 
-
-
-```bash
-root@elasticSrv1:/home/eleve# history
-
-```
-
------------------------------------------------------------
------------------------------------------------------------
------------------------------------------------------------
-
-
-
-
-# erreur 1 
-
-
-```bash
-root@elasticSrv1:/home/eleve# history
-
-```
-
------------------------------------------------------------
------------------------------------------------------------
------------------------------------------------------------
-
-
-
-
-# erreur 1 
-
-
-```bash
-root@elasticSrv1:/home/eleve# history
-
-```
-
------------------------------------------------------------
------------------------------------------------------------
------------------------------------------------------------
-
-
-
-
-# erreur 1 
-
-
-```bash
-root@elasticSrv1:/home/eleve# history
-
-```
-
------------------------------------------------------------
------------------------------------------------------------
------------------------------------------------------------
-
-
-
-
-# erreur 1 
-
-
-```bash
-root@elasticSrv1:/home/eleve# history
-
-```
-
------------------------------------------------------------
------------------------------------------------------------
------------------------------------------------------------
-
-
-
-
-# erreur 1 
-
-
-```bash
-root@elasticSrv1:/home/eleve# history
-
-```
-
------------------------------------------------------------
------------------------------------------------------------
------------------------------------------------------------
-
-
-
-# erreur 1 
-
-
-```bash
-root@elasticSrv1:/home/eleve# history
-
-```
-
------------------------------------------------------------
------------------------------------------------------------
------------------------------------------------------------
-
-
-
-# erreur 1 
-
-
-```bash
-root@elasticSrv1:/home/eleve# history
-
-```
-
------------------------------------------------------------
------------------------------------------------------------
------------------------------------------------------------
-
-
-
-# erreur 1 
-
-
-```bash
-root@elasticSrv1:/home/eleve# history
-
-```
-
------------------------------------------------------------
------------------------------------------------------------
------------------------------------------------------------
-
-
-# erreur 1 
-
-
-```bash
-root@elasticSrv1:/home/eleve# history
-
-```
-
------------------------------------------------------------
------------------------------------------------------------
------------------------------------------------------------
-
-
-
-# erreur 1 
-
-
-```bash
-root@elasticSrv1:/home/eleve# history
-
-```
-
------------------------------------------------------------
------------------------------------------------------------
------------------------------------------------------------
-
-
-
-
-# erreur 1 
-
-
-```bash
-root@elasticSrv1:/home/eleve# history
-
-```
-
------------------------------------------------------------
------------------------------------------------------------
------------------------------------------------------------
-
-
-
-
-# erreur 1 
-
-
-```bash
-root@elasticSrv1:/home/eleve# history
-
-```
-
------------------------------------------------------------
------------------------------------------------------------
------------------------------------------------------------
-
-
-
-
-# erreur 1 
-
-
-```bash
-root@elasticSrv1:/home/eleve# history
-
-```
-
------------------------------------------------------------
------------------------------------------------------------
------------------------------------------------------------
-
-
-
-
-# erreur 1 
-
-
-```bash
-root@elasticSrv1:/home/eleve# history
-
-```
-
------------------------------------------------------------
------------------------------------------------------------
------------------------------------------------------------
-
-
-
-
-# erreur 1 
-
-
-```bash
-root@elasticSrv1:/home/eleve# history
-
-```
-
------------------------------------------------------------
------------------------------------------------------------
------------------------------------------------------------
-
-
-
-
-# erreur 1 
-
-
-```bash
-root@elasticSrv1:/home/eleve# history
-
-```
-
------------------------------------------------------------
------------------------------------------------------------
------------------------------------------------------------
-
-
-
-# erreur 1 
-
-
-```bash
-root@elasticSrv1:/home/eleve# history
-
-```
-
------------------------------------------------------------
------------------------------------------------------------
------------------------------------------------------------
-
-
-
-# erreur 1 
-
-
-```bash
-root@elasticSrv1:/home/eleve# history
-
-```
-
------------------------------------------------------------
------------------------------------------------------------
------------------------------------------------------------
-
-
