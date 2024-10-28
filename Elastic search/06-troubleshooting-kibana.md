@@ -67,7 +67,13 @@ curl: (52) Empty reply from server
 
 ```bash
 sudo /usr/share/elasticsearch/bin/elasticsearch-reset-password -u elastic  (pour générer un nouveau mot de passe)
-curl -u elastic:c+vdv5FUzys5hft5*8Fs -k -X GET 'https://localhost:9200/'
+curl -u elastic:c+vdv5FUzys5hft5*8Fs -k -X GET 'https://localhost:9200/' (ette option indique à curl d'ignorer les erreurs de validation du certificat SSL)
+```
+
+## ➔ 2.2.1 RÉSOLUTION FINALE
+
+```bash
+curl -u elastic:c+vdv5FUzys5hft5*8Fs -k -X GET 'https://localhost:9200/' (ette option indique à curl d'ignorer les erreurs de validation du certificat SSL)
 ```
 
 
