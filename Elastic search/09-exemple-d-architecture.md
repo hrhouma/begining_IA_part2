@@ -1,4 +1,5 @@
 
+- https://medium.com/@itcode.ren/getting-started-monitoring-with-filebeat-logstash-elasticsearch-and-kibana-elk-stack-and-docker-5c38b6f85b2a
 - https://rohitnagose-devops.medium.com/building-a-data-pipeline-with-kafka-elk-stack-and-docker-aa104c7e8fdb
 - https://github.com/harryleesan/kafka-logstash-docker/tree/master
 - https://www.youtube.com/watch?v=qRGhhL91vNU&ab_channel=CodeSpotify
