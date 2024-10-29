@@ -1,4 +1,12 @@
 
+- https://rohitnagose-devops.medium.com/building-a-data-pipeline-with-kafka-elk-stack-and-docker-aa104c7e8fdb
+- https://github.com/harryleesan/kafka-logstash-docker/tree/master
+- https://www.youtube.com/watch?v=qRGhhL91vNU&ab_channel=CodeSpotify
+- https://medium.com/@kayvan.sol2/deploy-elasticsearch-kibana-logstash-with-docker-compose-df518d68731d
+- https://github.com/harryleesan/kafka-logstash-docker
+- https://github.com/Vungle/docker-logstash-kafka-es
+
+
 
 ![image](https://github.com/user-attachments/assets/57226c75-20d5-47c3-ad4c-5c10443762b4)
 
