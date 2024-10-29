@@ -50,11 +50,11 @@
 ----------------------------------------------------------
 
 
-##### Exemple la détection d'objets dans des flux vidéo
+# Exemple la détection d'objets dans des flux vidéo
 
 ---
 
-### Architecture en Code ASCII
+# Architecture en Code ASCII
 
 ```plaintext
 +---------------------+         +-----------+        +-------+        +-------+
@@ -82,7 +82,7 @@
 
 *Cette architecture est conçue pour être résiliente et scalable, capable de gérer des volumes massifs de données vidéo et de fournir des insights en temps réel.*
 
-### Explication Détailée des Composants
+# Explication Détailée des Composants
 
 1. **Video Data Sources** :  
    Ce composant représente les sources de flux vidéo, par exemple, des caméras de surveillance ou des fichiers vidéo importés. Ces vidéos contiennent des informations visuelles qui seront analysées pour en extraire des métadonnées.
@@ -131,7 +131,7 @@
 
 **Contexte** : Une entreprise souhaite utiliser cette architecture pour détecter en temps réel la présence de personnes dans des zones sécurisées de son bâtiment.
 
-#### Étapes du Processus
+# Étapes du Processus
 
 1. **Collecte des données vidéo** :
    - Des caméras de surveillance envoient en continu des flux vidéo vers Logstash.
@@ -171,7 +171,7 @@
 
 - Ci-bas quelques suggestions pour améliorer l'architecture présentée, en tenant compte de la scalabilité, de la résilience, de la gestion des coûts et de la flexibilité des analyses en temps réel.
 
-### 1. **Ajout de Docker et Kubernetes pour l'Orchestration des Services**
+# 1. **Ajout de Docker et Kubernetes pour l'Orchestration des Services**
 
    - **Problème** : Les différents composants (Logstash, Kafka, Spark, TensorFlow Serving, etc.) peuvent être difficiles à gérer, surtout en cas de montée en charge.
    - **Solution** : En conteneurisant chaque composant (ex. Logstash, Kafka, Spark) avec Docker et en utilisant Kubernetes pour orchestrer ces conteneurs, vous pouvez facilement déployer, mettre à jour, et scaler chaque service indépendamment.
@@ -185,7 +185,7 @@
    |                                                                             |
    ```
 
-### 2. **Utilisation de Redis ou Cassandra pour un Cache de Métadonnées**
+# 2. **Utilisation de Redis ou Cassandra pour un Cache de Métadonnées**
 
    - **Problème** : Les requêtes fréquentes sur Elasticsearch peuvent entraîner des délais de réponse si le volume de données est élevé.
    - **Solution** : Ajouter un cache rapide comme Redis ou Cassandra pour stocker les métadonnées les plus fréquemment consultées. Redis peut stocker les données chaudes (les plus récentes) pour des recherches rapides, tandis que Cassandra offre une persistance distribuée.
@@ -203,7 +203,7 @@
    +-----------------------+
    ```
 
-### 3. **Intégration de Flink pour le Traitement des Données en Flux Complexes**
+# 3. **Intégration de Flink pour le Traitement des Données en Flux Complexes**
 
    - **Problème** : Bien que Spark soit performant pour le traitement par lot, il n’est pas aussi optimal pour le traitement de flux en temps réel complexe (ex. détection de séquences d’événements).
    - **Solution** : Ajouter Apache Flink pour le traitement des flux en temps réel. Flink peut être utilisé pour détecter des modèles complexes (comme des séquences de comportements suspects) avec une latence très faible.
@@ -217,7 +217,7 @@
         |
    ```
 
-### 4. **Automatisation et Intelligence Adaptative pour le Modèle TensorFlow Serving**
+# 4. **Automatisation et Intelligence Adaptative pour le Modèle TensorFlow Serving**
 
    - **Problème** : Le modèle ML déployé peut nécessiter des mises à jour régulières pour s'adapter aux nouvelles données et maintenir une bonne précision.
    - **Solution** : Intégrer un pipeline de machine learning (ML) automatisé avec MLflow ou Kubeflow pour surveiller les performances du modèle, déclencher des réentraînements, et déployer de nouvelles versions de modèle en production.
@@ -231,7 +231,7 @@
    +-----------------------------------------+
    ```
 
-### 5. **Amélioration de la Sécurité et Surveillance avec Grafana et Prometheus**
+# 5. **Amélioration de la Sécurité et Surveillance avec Grafana et Prometheus**
 
    - **Problème** : Le monitoring de la performance des différents services est crucial pour détecter les problèmes tôt (latence, erreurs de réseau, etc.).
    - **Solution** : Utiliser Prometheus pour collecter des métriques en temps réel sur les services (CPU, mémoire, latence) et Grafana pour visualiser ces données via des tableaux de bord. Ajoutez également des alertes pour détecter les anomalies.
@@ -245,7 +245,7 @@
    +------------------+             +-----------------+
    ```
 
-### 6. **Implémentation d'un Système de Backup et de Rétention des Données**
+# 6. **Implémentation d'un Système de Backup et de Rétention des Données**
 
    - **Problème** : La perte de données vidéo ou de métadonnées peut être critique, en particulier dans les domaines de la sécurité.
    - **Solution** : Intégrer une stratégie de sauvegarde automatique pour HDFS et Elasticsearch. Utilisez un stockage object (comme Amazon S3 ou MinIO) pour conserver les sauvegardes, avec des règles de rétention pour gérer les coûts.
@@ -261,7 +261,7 @@
 
 ---
 
-### Architecture Améliorée en ASCII
+# Architecture Améliorée 
 
 ```plaintext
 +---------------------+         +-----------+        +-------+         +--------+
@@ -302,7 +302,7 @@
 
 ---
 
-### Résumé des Améliorations
+# Résumé des Améliorations
 
 | Composant             | Amélioration                                       | Avantage                                   |
 |-----------------------|----------------------------------------------------|--------------------------------------------|
