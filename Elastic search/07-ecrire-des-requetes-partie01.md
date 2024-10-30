@@ -1,6 +1,6 @@
 # Introduction:
 
-- L'objectif de ce document est de vous fournir un ensemble détaillé de commandes `curl` pour interagir facilement avec Elasticsearch. 
+*L'objectif de ce document est de vous fournir un ensemble détaillé de commandes `curl` pour interagir facilement avec Elasticsearch.* 
 - Vous y trouverez des explications claires et des exemples concrets utilisant des noms d'index et des données, afin de vous guider dans l'exploration et la manipulation des données au sein d'Elasticsearch.
 
 
