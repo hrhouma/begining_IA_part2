@@ -1,5 +1,5 @@
 ------------
-# Partie 01 - Écriture des requêtes avec le user:password !
+# Partie 01 - Écriture des requêtes sans (user:password) !
 ------------
 
 ## Prérequis : Annexe 01
