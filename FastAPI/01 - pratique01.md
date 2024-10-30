@@ -11,6 +11,7 @@ Nous allons créer une API de calculatrice simple avec FastAPI qui inclut des op
 cd mon_projet
 python -m venv monfastapi
 monfastapi\Scripts\activate
+python -- version
 pip install fastapi uvicorn
 deactivate
 ```
@@ -26,6 +27,19 @@ Ces commandes :
 Vous pouvez réactiver l'environnement plus tard en utilisant :
 ```bash
 monfastapi\Scripts\activate
+```
+
+
+### Alternative pour python 3.9
+
+
+```bash
+cd mon_projet_2
+python3.9 -m venv monfastapi
+monfastapi\Scripts\activate
+python -- version
+pip install fastapi uvicorn
+deactivate
 ```
 
 #### Étape 1 : Installation de FastAPI et Uvicorn
