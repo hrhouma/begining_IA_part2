@@ -64,6 +64,7 @@ print(f"Fichier {output_file} prêt pour importation en bulk.")
 2. Exécutez-le avec la commande suivante :
 
     ```bash
+    nano prepare_bulk.py
     python3 prepare_bulk.py
     ```
 
