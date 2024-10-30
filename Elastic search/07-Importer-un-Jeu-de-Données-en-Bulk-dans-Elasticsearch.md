@@ -131,3 +131,30 @@ Cela vous renvoie tous les documents dans l'index **`news`** contenant le mot **
 # 📚 Résumé
 
 Ce tutoriel couvre la préparation d'un fichier JSON pour l'importation en bulk dans Elasticsearch, le formatage du fichier pour l'API Bulk et la vérification de l'importation. Utilisez cette méthode pour tout fichier JSON nécessitant une ligne d'action pour chaque document, afin de garantir la compatibilité avec Elasticsearch.
+
+
+--------------------------
+# Supprimer le tous
+--------------------------
+
+Pour supprimer l'index et toutes les données associées dans Elasticsearch, vous pouvez utiliser la commande suivante :
+
+```bash
+curl -u elastic:c+vdv5FUzys5hft5*8Fs -k -X DELETE "https://localhost:9200/news"
+```
+
+### Explication
+- **`-u elastic:c+vdv5FUzys5hft5*8Fs`** : Indique les identifiants d'utilisateur et mot de passe pour accéder à Elasticsearch.
+- **`-X DELETE`** : Spécifie que vous souhaitez effectuer une opération de suppression.
+- **`https://localhost:9200/news`** : Indique l'URL de l'index `news` à supprimer.
+
+### Vérification
+Après avoir exécuté la commande, vous pouvez vérifier que l’index a bien été supprimé en exécutant la commande suivante pour lister les index existants :
+
+```bash
+curl -u elastic:c+vdv5FUzys5hft5*8Fs -k -X GET 'https://localhost:9200/_cat/indices?v'
+```
+
+Cette commande affichera tous les index existants dans Elasticsearch. Si l'index `news` a été supprimé correctement, il ne devrait plus apparaître dans la liste.
+
+
