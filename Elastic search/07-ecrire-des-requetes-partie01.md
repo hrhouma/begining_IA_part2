@@ -1,5 +1,11 @@
+------------
+# Partie 01 - Écriture des requêtes avec le user:password !
+------------
+
+## Prérequis : Annexe 01
+
 -----------------------------
-# Introduction:
+#### Introduction:
 -----------------------------
 
 *L'objectif de ce document est de vous fournir un ensemble détaillé de commandes `curl` pour interagir facilement avec Elasticsearch.* 
@@ -187,15 +193,20 @@
    **Explication :** Sauvegarde l’index `products` dans un snapshot nommé `products_snapshot` dans un dépôt de snapshots appelé `my_backup`.
 
 ------------
-# Annexe 01: Récriture des requêtes avec le user:password !
+# Partie 02 - Ré-écriture des requêtes avec le user:password !
 ------------
+
+---------------------
+##### Exemple:
+---------------------
 
 ```bash
 curl -u elastic:c+vdv5FUzys5hft5*8Fs -k -X GET 'https://localhost:9200/'
 ```
 
-
-# Introduction:
+---------------------
+##### Introduction:
+---------------------
 
 *L'objectif de ce document est de vous fournir un ensemble détaillé de commandes `curl` pour interagir facilement avec Elasticsearch.* 
 > Vous y trouverez des explications claires et des exemples concrets utilisant des noms d'index et des données, afin de vous guider dans l'exploration et la manipulation des données au sein d'Elasticsearch.
@@ -382,5 +393,12 @@ curl -u elastic:c+vdv5FUzys5hft5*8Fs -k -X GET 'https://localhost:9200/'
    }'
    ```
    **Explication :** Sauvegarde l’index `products` dans un snapshot nommé `products_snapshot` dans un dépôt de snapshots appelé `my_backup`.
+
+
+
+------------
+# Annexe 01
+------------
+
 
 
