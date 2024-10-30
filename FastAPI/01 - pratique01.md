@@ -2,7 +2,34 @@
 
 Nous allons créer une API de calculatrice simple avec FastAPI qui inclut des opérations d'addition, de soustraction, de multiplication et de division, ainsi que la documentation interactive générée par Swagger UI.
 
+
+
+
+## Créer et gérer un environnement virtuel Python appelé `monfastapi` :
+
+```bash
+cd mon_projet
+python -m venv monfastapi
+monfastapi\Scripts\activate
+pip install fastapi uvicorn
+deactivate
+```
+
+Ces commandes :
+
+1. Naviguent vers le dossier de votre projet.
+2. Créent l'environnement virtuel `monfastapi`.
+3. Activent l'environnement.
+4. Installent FastAPI et Uvicorn.
+5. Désactivent l'environnement. 
+
+Vous pouvez réactiver l'environnement plus tard en utilisant :
+```bash
+monfastapi\Scripts\activate
+```
+
 #### Étape 1 : Installation de FastAPI et Uvicorn
+
 
 Commencez par installer FastAPI et Uvicorn. Exécutez les commandes suivantes dans votre terminal :
 
