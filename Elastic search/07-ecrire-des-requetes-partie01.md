@@ -395,8 +395,154 @@ curl -u elastic:c+vdv5FUzys5hft5*8Fs -k -X GET 'https://localhost:9200/'
    **Explication :** Sauvegarde l’index `products` dans un snapshot nommé `products_snapshot` dans un dépôt de snapshots appelé `my_backup`.
 
 
+### 17. **Restaurer un snapshot dans un dépôt de snapshots**
+   (Assurez-vous que le dépôt de snapshots est déjà configuré et accessible pour cette opération).
+   ```bash
+   curl -u elastic:c+vdv5FUzys5hft5*8Fs -k -XPOST "https://localhost:9200/_snapshot/my_backup/products_snapshot/_restore"
+   ```
+   **Explication :** Cette commande restaure l’index `products` à partir du snapshot `products_snapshot` stocké dans le dépôt `my_backup`. Elle est utile pour récupérer des données en cas de suppression accidentelle ou de corruption de l’index.
+
+---
+
+### 18. **Créer un alias pour un index**
+   Un alias permet de créer un "nom alternatif" pour un index, facilitant l’accès et la gestion des index sans avoir à modifier directement le nom des index.
+   ```bash
+   curl -u elastic:c+vdv5FUzys5hft5*8Fs -k -XPOST "https://localhost:9200/_aliases" -H 'Content-Type: application/json' -d'
+   {
+     "actions": [
+       {
+         "add": {
+           "index": "products",
+           "alias": "current_products"
+         }
+       }
+     ]
+   }'
+   ```
+   **Explication :** Cet alias `current_products` permet de faire référence à l’index `products` de manière flexible. Vous pouvez rediriger les requêtes vers un autre index sans changer le nom dans votre application.
+
+---
+
+### 19. **Supprimer un alias d’un index**
+   Pour supprimer un alias créé précédemment pour un index.
+   ```bash
+   curl -u elastic:c+vdv5FUzys5hft5*8Fs -k -XPOST "https://localhost:9200/_aliases" -H 'Content-Type: application/json' -d'
+   {
+     "actions": [
+       {
+         "remove": {
+           "index": "products",
+           "alias": "current_products"
+         }
+       }
+     ]
+   }'
+   ```
+   **Explication :** Cette commande supprime l’alias `current_products` de l’index `products`, ce qui peut être nécessaire pour des raisons de maintenance ou pour réaffecter l’alias à un autre index.
+
+---
+
+### 20. **Ajouter un pipeline d'ingestion pour traitement des données**
+   Elasticsearch permet de définir des pipelines pour transformer les données avant de les indexer.
+   ```bash
+   curl -u elastic:c+vdv5FUzys5hft5*8Fs -k -XPUT "https://localhost:9200/_ingest/pipeline/my_pipeline" -H 'Content-Type: application/json' -d'
+   {
+     "description": "Pipeline de test pour modifier les champs",
+     "processors": [
+       {
+         "set": {
+           "field": "category",
+           "value": "unknown"
+         }
+       }
+     ]
+   }'
+   ```
+   **Explication :** Ce pipeline `my_pipeline` modifie le champ `category` d'un document, en le définissant à `unknown` si aucune valeur n’est spécifiée. Il peut être appliqué lors de l’indexation de documents pour assurer la cohérence des données.
+
+---
+
+### 21. **Indexer un document avec un pipeline d'ingestion**
+   Vous pouvez appliquer un pipeline d’ingestion directement lors de l’indexation de nouveaux documents.
+   ```bash
+   curl -u elastic:c+vdv5FUzys5hft5*8Fs -k -XPUT "https://localhost:9200/products/_doc/2?pipeline=my_pipeline" -H 'Content-Type: application/json' -d'
+   {
+     "name": "Smartphone",
+     "price": 800,
+     "stock": 30
+   }'
+   ```
+   **Explication :** Ce document `Smartphone` est ajouté à l’index `products` en passant par le pipeline `my_pipeline`, ce qui garantit que le champ `category` sera défini, même s’il n’est pas inclus dans les données initiales.
+
+---
+
+### 22. **Afficher les pipelines d'ingestion existants**
+   Pour obtenir la liste de tous les pipelines d'ingestion configurés dans Elasticsearch.
+   ```bash
+   curl -u elastic:c+vdv5FUzys5hft5*8Fs -k -XGET "https://localhost:9200/_ingest/pipeline"
+   ```
+   **Explication :** Cette commande renvoie tous les pipelines d’ingestion existants avec leurs configurations, permettant de vérifier les pipelines disponibles et de comprendre leur fonctionnement.
+
+---
+
+### 23. **Supprimer un pipeline d'ingestion**
+   Si un pipeline d’ingestion n’est plus nécessaire, vous pouvez le supprimer.
+   ```bash
+   curl -u elastic:c+vdv5FUzys5hft5*8Fs -k -XDELETE "https://localhost:9200/_ingest/pipeline/my_pipeline"
+   ```
+   **Explication :** La suppression du pipeline `my_pipeline` libère des ressources et évite l’application de transformations indésirables sur les nouveaux documents.
+
+---
+
+### 24. **Exécuter une requête `match_all` pour récupérer tous les documents**
+   La requête `match_all` renvoie tous les documents d'un index.
+   ```bash
+   curl -u elastic:c+vdv5FUzys5hft5*8Fs -k -XGET "https://localhost:9200/products/_search" -H 'Content-Type: application/json' -d'
+   {
+     "query": {
+       "match_all": {}
+     }
+   }'
+   ```
+   **Explication :** La requête `match_all` est utile pour examiner tous les documents d'un index sans appliquer de filtres spécifiques.
+
+---
+
+### 25. **Utiliser une requête de filtrage booléen**
+   Exemple de requête booléenne pour filtrer les documents selon plusieurs critères.
+   ```bash
+   curl -u elastic:c+vdv5FUzys5hft5*8Fs -k -XGET "https://localhost:9200/products/_search" -H 'Content-Type: application/json' -d'
+   {
+     "query": {
+       "bool": {
+         "must": [
+           { "match": { "category": "Electronics" }},
+           { "range": { "price": { "lte": 1000 }}}
+         ]
+       }
+     }
+   }'
+   ```
+   **Explication :** Cette requête combine deux conditions avec `bool` : elle sélectionne les documents où `category` est `Electronics` et où `price` est inférieur ou égal à 1000, permettant des recherches plus complexes.
+
+---
+
+*Ces exemples couvrent un éventail de fonctionnalités de base et avancées d'Elasticsearch, offrant une base pour interagir efficacement avec les indices, documents, et pipelines de données. Chaque commande, accompagnée de ses explications, vous aidera à maîtriser les opérations essentielles et à mieux comprendre le rôle de chaque élément dans la gestion et l’interrogation des données au sein d’Elasticsearch.*
+
+
+
 
 ------------
+------------
+------------
+------------
+------------
+------------
+------------
+------------
+------------
+------------
+
 # Annexe 01 - Comment éviter le problème de spécification (user:password) dans les requêtes ?
 ------------
 
