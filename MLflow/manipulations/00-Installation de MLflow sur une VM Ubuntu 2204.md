@@ -114,6 +114,13 @@ mlflow server --backend-store-uri sqlite:///database/mlflow.db  --default-artifa
 ```bash
 mlflow ui
 ```
+
+ou 
+
+```bash
+   mlflow server --backend-store-uri sqlite:///mlflow.db --default-artifact-root ./mlruns --host 127.0.0.1 --port 5000
+```
+
 ## Allez à http://127.0.0.1:5000
 
 ### Suivi des expériences
@@ -167,7 +174,7 @@ with mlflow.start_run():
 
 
 ------------------------
-# Annexe 01: Différence entre mlflow server et mlflow ui ?
+# Annexe 02: Différence entre mlflow server et mlflow ui ?
 ------------------------
 
 
@@ -197,3 +204,60 @@ Cette commande démarre une **interface utilisateur locale et temporaire** pour 
 
 - **`mlflow server`** : pour un déploiement robuste, multi-utilisateurs, et configurable en production.
 - **`mlflow ui`** : pour une interface locale de visualisation rapide, sans configuration avancée.
+
+
+
+
+
+------------------------
+# Annexe 03: Erreur serveur
+------------------------
+
+
+![image](https://github.com/user-attachments/assets/b6be7222-80b2-45a7-8653-4588e21dc78d)
+
+
+##### Exemple de code :
+
+```python
+import mlflow
+
+# Optionally set the tracking URI
+mlflow.set_tracking_uri("http://127.0.0.1:5000")
+
+# Set the experiment name
+mlflow.set_experiment("Default")
+
+# Start a new MLflow run
+with mlflow.start_run():
+    mlflow.log_param("param1", 5)
+    mlflow.log_metric("metric1", 0.85)
+    mlflow.set_tag("tag1", "example")
+```
+
+Assurez-vous que le serveur MLflow est démarré avant d'exécuter ce code, comme expliqué précédemment.
+
+
+
+Le code ci-haut  configure bien l'URI de traçage pour MLflow, mais l'erreur que vous voyez dans l'image ("Unable to connect to the server at 127.0.0.1:5000") indique que le serveur MLflow n'est pas en cours d'exécution sur cette adresse. Voici quelques vérifications et étapes de dépannage pour résoudre le problème :
+
+1. **Vérifiez si le serveur MLflow est démarré** : Assurez-vous d'avoir démarré le serveur MLflow en exécutant cette commande dans le terminal :
+   ```bash
+   mlflow server --backend-store-uri sqlite:///mlflow.db --default-artifact-root ./mlruns --host 127.0.0.1 --port 5000
+   ```
+   Cela démarrera le serveur MLflow sur `http://127.0.0.1:5000`.
+
+2. **Vérifiez si le port 5000 est utilisé** : Si le port 5000 est déjà occupé par un autre service, MLflow ne pourra pas se connecter. Vous pouvez vérifier cela avec :
+   ```bash
+   lsof -i :5000
+   ```
+   Si le port est utilisé, vous pouvez choisir un autre port pour MLflow, par exemple 5001, et modifier votre code ainsi :
+   ```python
+   mlflow.set_tracking_uri("http://127.0.0.1:5001")
+   ```
+
+3. **Vérifiez votre pare-feu ou antivirus** : Assurez-vous que le port 5000 n'est pas bloqué par un pare-feu ou un antivirus.
+
+4. **Relancez le navigateur** : Parfois, il peut s'agir d'un problème temporaire de connexion avec le navigateur. Relancer Firefox pourrait aider.
+
+Après avoir suivi ces étapes, essayez de recharger la page et de voir si le problème persiste.
