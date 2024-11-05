@@ -1,8 +1,6 @@
 # Table des Matières
 
 
-Voici le tableau avec des noms de fichiers significatifs pour chaque étape :
-
 ```plaintext
 +----+------------------------------+-------------------------------------------------------------+
 | No | Fichier                      | Ajout par rapport à la version précédente                   |
