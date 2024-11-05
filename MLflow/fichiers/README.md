@@ -1,4 +1,6 @@
 
+# Étapes
+
 ```plaintext
 | Numéro | Nom du Fichier                 | Objectif                                                                                          |
 |--------|---------------------------------|---------------------------------------------------------------------------------------------------|
@@ -33,4 +35,3 @@
 | 29     | CLI Commands (1)                | Suite des commandes CLI, ajout de nouvelles fonctionnalités et options.                            |
 ```
 
-Cette structure permet de suivre l'évolution et les ajouts progressifs d'objectifs et de fonctionnalités dans chaque fichier.
