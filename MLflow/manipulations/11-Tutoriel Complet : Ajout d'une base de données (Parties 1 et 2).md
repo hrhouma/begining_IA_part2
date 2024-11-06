@@ -1,6 +1,6 @@
 # Tutoriel Complet :  Ajout d'une base de données (Parties 1 et 2)
 
-# Partie 1 - Configuration de S3 après PostgreSQL sur une Machine Virtuelle Ubuntu 22.04
+## Partie 1 - Configuration de S3 après PostgreSQL sur une Machine Virtuelle Ubuntu 22.04
 
 ## Objectif
 
