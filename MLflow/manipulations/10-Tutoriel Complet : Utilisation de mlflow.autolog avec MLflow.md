@@ -1,4 +1,4 @@
-### Tutoriel Complet : Utilisation de `mlflow.autolog` avec MLflow
+# Tutoriel Complet : Utilisation de `mlflow.autolog` avec MLflow
 
 ## Objectif
 
