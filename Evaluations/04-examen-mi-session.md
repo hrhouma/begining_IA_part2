@@ -1,6 +1,16 @@
-# Examen de mi-session
-------
-# Partie 01 - Quiz (20%)
+# Examen de mi-session 
+
+---
+
+### **Nom de l'étudiant :** _____________________________   **Groupe :** ________________   **Date :** ___________________
+
+---
+
+## **Partie 01 : Quiz (20%)**
+
+> Répondez à chaque question en sélectionnant **la meilleure option** parmi les choix proposés.
+
+
 
 1. **Dans un écosystème d’intelligence artificielle, quel est le principal rôle de MLflow ?**
    - a) Automatiser le déploiement de modèles sur des serveurs de production
@@ -122,65 +132,72 @@
     - c) Pour améliorer l’intégration avec d’autres plateformes d’IA
     - d) Pour réduire l’espace de stockage requis par MLflow
    
----------
-# Partie 02 - Question de développement (30%)
-
-**Question de développement :**
-
-- Imaginez que vous travaillez sur un projet de machine learning en collaboration avec plusieurs data scientists. 
-- Vous devez tester différents modèles et configurations, tout en vous assurant que les versions de chaque expérimentation sont bien suivies et reproductibles.
-
-**Question** :  
-- Décrivez comment l’utilisation de MLflow pourrait simplifier la gestion de ce projet et permettre une meilleure collaboration dans l’équipe. 
-- Expliquez en quoi le suivi des versions, la reproductibilité et la centralisation des expérimentations pourraient être utiles pour l'équipe dans ce contexte.
 
 
-----------
-# Partie 03 - **Question de développement :** (50%)
-
-Imaginez que vous êtes mandaté pour concevoir et mettre en place une plateforme de machine learning complète qui permet de gérer l’ensemble du cycle de vie d’un projet, depuis l’ingestion et le nettoyage des données jusqu’au déploiement et à la surveillance des modèles en production. Vous avez des contraintes importantes : vous devez pouvoir traiter des volumes de données élevés, entraîner plusieurs modèles et optimiser les hyperparamètres sans ralentir le développement, tout en évitant des coûts inutiles.
-
-En tant que spécialiste en intelligence artificielle  :
-
-1. **Proposez une description d'une architecture complète** : Détaillez les technologies, infrastructures et outils que vous mettriez en place pour développer, tester, et déployer vos modèles de machine learning. Vous pouvez envisager des options locales (VMs, serveurs physiques) ou des services cloud (ou une combinaison), ainsi que des solutions pour orchestrer les services (ex. Kubernetes, Docker Swarm). Expliquez les avantages et inconvénients de vos choix pour répondre aux besoins de scalabilité, rapidité, et flexibilité.
-
-2. **Infrastructure matérielle et gestion des coûts** : Décrivez la configuration matérielle optimale pour ce projet. Précisez si vous utiliseriez des GPU et, si oui, pourquoi. Si vous optez pour une infrastructure cloud, évaluez brièvement l’impact des coûts par rapport à une solution on-premise. Proposez des stratégies pour équilibrer performances et budget, notamment si vous envisagez des mécanismes de scaling automatique ou des services spécifiques pour optimiser les coûts en cloud.
-
-3. **Méthodologie de gestion des expérimentations et des versions de modèles** : Proposez des solutions pour gérer les expérimentations, enregistrer les versions des modèles et suivre les performances. Quels outils utiliseriez-vous pour garantir une reproductibilité et un suivi efficace des expérimentations ? 
-
-4. **Pipeline de données et préparation** : Élaborez votre approche pour nettoyer et préparer les données avant qu’elles n’entrent dans les modèles. Comment automatiseriez-vous ce processus, particulièrement pour des données volumineuses et variées ? Vous pouvez inclure des outils ou techniques pour le prétraitement des données, la gestion des transformations, et la détection de données erronées ou manquantes.
-
-5. **Déploiement, surveillance, et amélioration continue des modèles** : Expliquez comment vous automatiseriez le déploiement des modèles en production, la surveillance de leurs performances, et la gestion de plusieurs versions. Précisez si vous envisageriez d’utiliser des outils comme Kubernetes, et comment vous gèreriez l’amélioration continue des modèles en tenant compte des évolutions dans les données ou les exigences.
-
-- **Vous êtes entièrement libre de concevoir cette plateforme selon votre vision**. 
-- Justifiez chaque choix pour que je puisse comprendre en quoi votre solution répond efficacement aux besoins du projet, avec un équilibre entre performances, scalabilité, et maîtrise des coûts.
 
 
-# Annexe : **Grille d'évaluation
+## **Partie 02 : Question de développement (30%)**
 
-#### **Partie 01 - Quiz (20%)**
+**Contexte :**  
+Vous travaillez sur un projet de machine learning en collaboration avec plusieurs data scientists. Vous devez tester différents modèles et configurations, tout en vous assurant que les versions de chaque expérimentation sont bien suivies et reproductibles.
 
-> **Objectif :** Tester votre compréhension des concepts de MLflow et de son rôle dans l’écosystème d’intelligence artificielle.
+**Question :**  
+Expliquez comment l’utilisation de MLflow pourrait simplifier la gestion de ce projet et permettre une meilleure collaboration dans l’équipe. Discutez en particulier de l’utilité du suivi des versions, de la reproductibilité et de la centralisation des expérimentations pour votre équipe.
 
-Vous serez notés sur l'exactitude de vos réponses. Chaque question vaut 1 point, et seules les réponses correctes sont comptabilisées. 
+> **Éléments d'évaluation :**
+> - Pertinence de l’analyse et de la compréhension de MLflow pour un projet collaboratif.
+> - Capacité à expliquer la gestion des versions et la reproductibilité dans ce contexte.
+> - Clarté et structure des réponses.
 
-#### **Partie 02 - Question de développement (30%)**
+---
 
-> **Objectif :** Expliquer comment MLflow facilite la gestion de projets collaboratifs en machine learning.
+## **Partie 03 : Conception d’une plateforme de machine learning complète (50%)**
 
-**Critères d’évaluation :**
-- **Pertinence et profondeur de l’analyse** : Votre capacité à expliquer l’impact de MLflow dans un projet de machine learning collaboratif.
-- **Clarté des explications** : Vos réponses doivent être bien structurées et faciles à suivre.
-- **Réflexion sur la gestion des versions et de la reproductibilité** : Montrez que vous comprenez en quoi ces fonctionnalités sont utiles pour un travail d’équipe efficace et reproductible.
+**Contexte :**  
+Vous êtes mandaté pour concevoir et mettre en place une plateforme de machine learning complète qui permet de gérer l’ensemble du cycle de vie d’un projet, depuis l’ingestion et le nettoyage des données jusqu’au déploiement et à la surveillance des modèles en production. Vous devez tenir compte des contraintes suivantes : gestion de volumes de données élevés, entraînement de plusieurs modèles, optimisation des hyperparamètres sans ralentir le développement, et minimisation des coûts.
 
-#### **Partie 03 - Projet de plateforme de machine learning complète (50%)**
+### En tant que spécialiste en intelligence artificielle, proposez une solution complète :
 
-> **Objectif :** Proposer une solution de bout en bout pour une plateforme de machine learning, en tenant compte de la gestion des données, des coûts, de l’infrastructure et du déploiement.
+1. **Architecture complète** : Décrivez les technologies, infrastructures, et outils à utiliser pour développer, tester, et déployer vos modèles. Justifiez les avantages et inconvénients de vos choix pour répondre aux besoins de scalabilité, rapidité, et flexibilité.
 
-**Critères d’évaluation :**
-1. **Pertinence de l'architecture proposée** : Clarté et cohérence de votre solution technique pour le développement, le test et le déploiement des modèles.
-2. **Optimisation de l'infrastructure et des coûts** : Montrez comment votre solution tient compte des contraintes matérielles (ex. GPU, cloud, on-premise) et propose des moyens d’optimiser les coûts.
-3. **Méthodologie de gestion des expérimentations et des versions** : Exposez les outils ou méthodes pour garantir le suivi des versions et la reproductibilité des expérimentations.
-4. **Pipeline de données** : Présentez une stratégie de nettoyage et de transformation des données adaptée à de gros volumes.
-5. **Déploiement et amélioration continue** : Détaillez comment vous gérez le déploiement des modèles, leur suivi en production, et leur amélioration continue.
+2. **Infrastructure matérielle et gestion des coûts** : Précisez la configuration matérielle optimale (incluant l’utilisation potentielle de GPU). Si vous envisagez une infrastructure cloud, évaluez l'impact des coûts par rapport à une solution on-premise, et proposez des stratégies d'optimisation.
 
+3. **Méthodologie de gestion des expérimentations et versions** : Proposez des solutions pour enregistrer les versions des modèles, suivre les performances, et garantir la reproductibilité.
+
+4. **Pipeline de données et préparation** : Élaborez votre approche pour nettoyer et préparer les données, incluant des options pour automatiser ce processus pour des données volumineuses.
+
+5. **Déploiement, surveillance, et amélioration continue** : Décrivez votre méthode pour déployer les modèles, surveiller leurs performances, et gérer les versions en production. Expliquez si vous utiliseriez des outils comme Kubernetes et comment vous géreriez l’amélioration continue des modèles.
+
+> **Éléments d'évaluation :**
+> - **Pertinence et cohérence de l'architecture** : adéquation aux objectifs et contraintes.
+> - **Gestion de l'infrastructure et des coûts** : choix raisonnés et optimisation.
+> - **Méthodologie de gestion des expérimentations** : capacité à assurer le suivi et la reproductibilité.
+> - **Pipeline de données** : efficacité et scalabilité de la préparation des données.
+> - **Déploiement et surveillance** : robustesse et adaptabilité de la solution proposée.
+
+---
+
+## *Grille de notation*
+
+### **Partie 01 - Quiz (20%)**
+- Vous serez notés sur l'exactitude de vos réponses. Chaque question correcte rapporte 1 point.
+
+### **Partie 02 - Question de développement (30%)**
+- **Objectif** : Montrer votre capacité à analyser et expliquer comment MLflow facilite la gestion d’un projet de machine learning collaboratif.
+- **Critères** :
+  - Pertinence de l’analyse
+  - Clarté des explications
+  - Gestion des versions et reproductibilité
+
+### **Partie 03 - Projet de plateforme complète (50%)**
+- **Objectif** : Concevoir une plateforme de machine learning de bout en bout.
+- **Critères** :
+  - Pertinence et cohérence de l'architecture
+  - Optimisation de l'infrastructure et des coûts
+  - Méthodologie de gestion des expérimentations
+  - Efficacité du pipeline de données
+  - Robustesse du déploiement et de la surveillance des modèles
+
+---
+
+> Bonne chance à tous ! Soyez clairs et précis dans vos explications, et n’hésitez pas à justifier vos choix dans les questions de développement.
