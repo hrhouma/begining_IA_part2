@@ -1,4 +1,4 @@
-# 0 - Nouveaux ajouts par rapport au script précédent
+# Nouveaux ajouts par rapport au script précédent
 
 Dans cette version, nous avons introduit les concepts de signature de modèle et d’exemple d’entrée pour MLflow. Ces fonctionnalités permettent de spécifier la structure des entrées et sorties d’un modèle, ainsi que de fournir un exemple d’entrée pour aider les utilisateurs à comprendre les types de données attendus par le modèle.
 
